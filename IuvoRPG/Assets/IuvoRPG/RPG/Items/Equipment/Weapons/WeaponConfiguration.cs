@@ -8,7 +8,7 @@ namespace IuvoUnity
         namespace IuvoItems
         {
 #nullable enable
-            public class WeaponConfiguration
+            public class WeaponConfiguration : EquipmentConfiguration
             {
                 public EquipmentConfiguration? m_equipmentConfig;
                 public int? m_accuracy;
@@ -34,6 +34,10 @@ namespace IuvoUnity
                     m_damageType = damageType ?? DamageType.NULL;
                     m_isTwoHanded = isTwoHanded ?? false;
                 }
+
+                // need to add builder functions
+
+                // need to add debug functions
             }
         }
     }

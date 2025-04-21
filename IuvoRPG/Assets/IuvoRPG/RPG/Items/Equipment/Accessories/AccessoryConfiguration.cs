@@ -9,7 +9,7 @@ namespace IuvoUnity
         namespace IuvoItems
         {
 #nullable enable
-            public class AccessoryConfiguration
+            public class AccessoryConfiguration : EquipmentConfiguration
             {
                 public EquipmentConfiguration? m_equipmentConfig;
                 public AccessorySlot? m_accssorySlot;
@@ -28,6 +28,11 @@ namespace IuvoUnity
                     m_accssorySlot = accssorySlot ?? AccessorySlot.NULL;
                     m_toModify = toModify;
                 }
+
+                // need to add builder functions
+
+                // need to add debug functions
+
             }
         }
     }
