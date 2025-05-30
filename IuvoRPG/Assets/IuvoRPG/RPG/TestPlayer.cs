@@ -106,8 +106,8 @@ public class TestPlayer : PlayerControllerBase
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         moveInput = new Vector2(horizontal, vertical).normalized;
-        animator.SetFloat("Direction", horizontal);
-        animator.SetFloat("Velocity", vertical);
+        animator.SetFloat("DirectionX", horizontal);
+        animator.SetFloat("DirectionY", vertical);
 
     }
 }

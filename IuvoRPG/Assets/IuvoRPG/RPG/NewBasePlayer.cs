@@ -1,31 +1,51 @@
 using IuvoUnity._Input._Controllers;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(GravityBody))]
 public class BasePlayer : MonoBehaviour 
 {
     [Header("Components")]
-    private CharacterController characterController;
-    private GravityBody gravityBody;
-    private Rigidbody rb;
+    [SerializeField] private InputSystem_Actions inputActions;
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private GravityBody gravityBody;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody rb;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
-    public float moveRotationSpeed = 0.75f;
+    public float sprintMultiplier = 2f;
+    [Space(2)]
     public float dodgeMultiplier = 1.5f;
     public float dodgeDuration = 0.3f;
+    [Space(2)]
     public float jumpHoldForce = 5f;
-    public float jumpHoldDuration = 1.0f;
+    public float jumpMaxHoldTime = 1.0f;
+    [Space(2)]
+    public float crouchSpeed = 2.5f;
+    public bool IsCrouching { get; private set; } = false;
 
+
+    [Header("Rotation Settings")]
+    public float moveRotationSpeed = 0.75f;
+
+
+    [Space(10)]
     [Header("Runtime Values")]
-    private Vector3 inputDir;
-    private Vector3 velocity;
-    private bool isInPhysicsMode = false;
-    private bool isDodging = false;
-    private bool isJumping = false;
-    private float jumpTimer = 0f;
+    [SerializeField] private Vector3 movementDir;
+    [SerializeField] private Vector3 lookDirection;
+    [SerializeField] private Vector3 velocity;
+    [Space(2)]
+    [SerializeField] private float jumpTimer = 0f;
+    [Space(2)]
+    [SerializeField] private bool isInPhysicsMode = false;
+    [SerializeField] private bool isDodging = false;
+    [SerializeField] private bool isGrounded => characterController.isGrounded;
+    [SerializeField] public bool isTakingCover = false;
+    [SerializeField] public bool isCrouching = false;
+    [SerializeField] private bool isJumping = false;
 
     void Awake()
     {
@@ -37,64 +57,101 @@ public class BasePlayer : MonoBehaviour
         rb.useGravity = false;
 
         gravityBody.onlyApplyGravityWhenAirborne = false; // We'll handle that here.
+
+        SetUpInputs();
+    }
+
+    void SetUpInputs()
+    {
+        inputActions = new InputSystem_Actions();
+        inputActions.Player.Enable();
+
+        inputActions.Player.Move.performed += ctx =>
+        {
+            Vector2 moveInput = ctx.ReadValue<Vector2>();
+            movementDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+            velocity = movementDir * moveSpeed;
+            animator.SetFloat("Velocity", velocity.magnitude);
+            animator.SetFloat("DirectionX", movementDir.x);
+            animator.SetFloat("DirectionY", movementDir.z);
+        };
+        inputActions.Player.Move.canceled += ctx =>
+        {
+            movementDir = Vector3.zero; // Reset movement direction when input is canceled
+            velocity = Vector3.zero;
+            animator.SetFloat("Velocity", 0f);
+            animator.SetFloat("DirectionX", 0f);
+            animator.SetFloat("DirectionY", 0f);
+        };
+
+        inputActions.Player.Look.performed += ctx =>
+        {
+            Vector2 lookInput = ctx.ReadValue<Vector2>();
+            lookDirection = new Vector3(lookInput.x, 0, lookInput.y).normalized;
+            if (lookDirection != Vector3.zero)
+            {
+
+            }
+        };
+
+        inputActions.Player.Look.canceled += ctx =>
+        {
+            lookDirection = Vector3.zero; // Reset look direction when input is canceled
+        };
+        
+        inputActions.Player.Interact.performed += ctx =>
+        {
+            if (isInPhysicsMode || isDodging) return;
+            // Handle interaction logic here
+            Debug.Log("Interact action performed");
+        };
+
+        inputActions.Player.Crouch.performed += ctx =>
+        {
+            if (isInPhysicsMode || isDodging) return;
+            IsCrouching = !IsCrouching;
+            moveSpeed = IsCrouching ? crouchSpeed : moveSpeed; // Adjust speed for crouch
+            animator.SetBool("IsCrouching", IsCrouching);
+        };
+
+        inputActions.Player.Dodge.performed += ctx =>
+        {
+            if (isInPhysicsMode || isDodging || !isGrounded) return;
+            StartCoroutine(Dodge());
+        };
+
+
+
+
+
+        inputActions.Player.Sprint.performed += ctx =>
+        {
+            if (isInPhysicsMode || isDodging) return;
+            moveSpeed *= sprintMultiplier;
+            animator.SetBool("IsSprinting", true);
+        };
+        inputActions.Player.Sprint.canceled += ctx =>
+        {
+            if (isInPhysicsMode || isDodging) return;
+            moveSpeed /= sprintMultiplier;
+            animator.SetBool("IsSprinting", false);
+        };
+
+
+
     }
 
     void Update()
     {
         if (isInPhysicsMode) return;
 
-        // Movement input
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-        inputDir = new Vector3(h, 0f, v).normalized;
+        characterController.Move(velocity * Time.deltaTime);
 
-        // Face movement direction
-        if (inputDir.magnitude > 0.1f)
-        {
-            transform.forward = Vector3.Lerp(base.transform.forward, inputDir, ((moveRotationSpeed * moveSpeed) * Time.deltaTime));
-        }
-
-        // Simulate custom gravity movement
-        Vector3 gravity = gravityBody.currGravDirection;
-        velocity += gravity * Time.deltaTime;
-
-        // Move with CharacterController
-        Vector3 finalMove = inputDir * moveSpeed;// + velocity;
-        characterController.Move(finalMove * Time.deltaTime);
-
-        // Store current velocity
-        velocity = characterController.velocity;
-
-        // Dodge (tap)
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging)
-        {
-            StartCoroutine(Dodge());
-        }
-
-        // Jump (hold)
-        if (Input.GetKey(KeyCode.Space) && characterController.isGrounded)
-        {
-            if (!isJumping)
-            {
-                isJumping = true;
-                jumpTimer = 0f;
-            }
-        }
-        else if (isJumping)
-        {
-            isJumping = false;
-        }
     }
 
     void FixedUpdate()
     {
-        // Jump force application
-        if (!isInPhysicsMode && isJumping && jumpTimer < jumpHoldDuration)
-        {
-            jumpTimer += Time.fixedDeltaTime;
-            Vector3 jumpDir = -gravityBody.currGravDirection.normalized;
-            characterController.Move(jumpDir * jumpHoldForce * Time.fixedDeltaTime);
-        }
+
     }
 
     private IEnumerator Dodge()
