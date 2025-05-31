@@ -9,11 +9,12 @@ public class SceneManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+       
+        cam = GetComponentInChildren<Camera>();
     }
 
     void Start()
     {
-        cam = GetComponent<Camera>();
         
     }
 

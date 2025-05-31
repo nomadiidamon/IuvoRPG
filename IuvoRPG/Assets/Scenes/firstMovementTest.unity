@@ -5228,11 +5228,14 @@ MonoBehaviour:
   moveSpeed: 5
   sprintMultiplier: 2
   moveRotationSpeed: 0.75
+  aimDistance: 0
+  aimTarget: {x: 0, y: 0, z: 0}
   customGravityDirection: {x: 0, y: -1, z: 0}
   customGravityStrength: 20
   movementDir: {x: 0, y: 0, z: 0}
   isGrounded: 0
   isSprinting: 0
+  isAiming: 0
 --- !u!95 &2067204704
 Animator:
   serializedVersion: 7
@@ -7189,6 +7192,10 @@ PrefabInstance:
     - target: {fileID: 3610765733526420530, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_Name
       value: SceneManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704632657117977544, guid: 3836e1e19df3594498e913867bc75134, type: 3}
+      propertyPath: DefaultBlend.Time
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4815906387172172307, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: cam

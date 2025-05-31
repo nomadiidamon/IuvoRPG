@@ -52,16 +52,6 @@ public class PlayerCameraManager : MonoBehaviour
         UpdateCameraStyle();
     }
 
-    void Update()
-    {
-
-    }
-
-    void UpdateCamera()
-    {
-
-    }
-
     void UpdateCameraStyle()
     {
 
