@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(GravityBody))]
-public class BasePlayer : MonoBehaviour 
+public class BasePlayer : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private InputSystem_Actions inputActions;
@@ -38,15 +38,14 @@ public class BasePlayer : MonoBehaviour
     [Header("Runtime Values")]
     [SerializeField] private Vector3 movementDir;
     [SerializeField] private Vector3 lookDirection;
-    [SerializeField] private float xRotation;
-    [SerializeField] private float yRotation;
     [SerializeField] private Vector3 velocity;
+    [SerializeField] private Vector3 currRigidbidy;
     [Space(2)]
     [SerializeField] private float jumpTimer = 0f;
     [Space(2)]
     [SerializeField] private bool isInPhysicsMode = false;
     [SerializeField] private bool isDodging = false;
-    [SerializeField] private bool isGrounded => characterController.isGrounded;
+    [SerializeField] private bool isGrounded;
     [SerializeField] public bool isTakingCover = false;
     [SerializeField] public bool isCrouching = false;
     [SerializeField] private bool isJumping = false;
@@ -101,7 +100,7 @@ public class BasePlayer : MonoBehaviour
             lookDirection = new Vector3(lookInput.x, 0, lookInput.y).normalized;
             if (lookDirection != Vector3.zero)
             {
-                
+
             }
         };
 
@@ -109,13 +108,13 @@ public class BasePlayer : MonoBehaviour
         {
             lookDirection = Vector3.zero; // Reset look direction when input is canceled
         };
-        
-        inputActions.Player.Interact.performed += ctx =>
-        {
-            if (isInPhysicsMode || isDodging) return;
-            // Handle interaction logic here
-            Debug.Log("Interact action performed");
-        };
+
+        //inputActions.Player.Interact.performed += ctx =>
+        //{
+        //    if (isInPhysicsMode || isDodging) return;
+        //    // Handle interaction logic here
+        //    Debug.Log("Interact action performed");
+        //};
 
         inputActions.Player.Crouch.performed += ctx =>
         {
@@ -148,6 +147,18 @@ public class BasePlayer : MonoBehaviour
             animator.SetBool("IsSprinting", false);
         };
 
+        inputActions.Player.Jump.performed += ctx =>
+        {
+            if ((isInPhysicsMode || isDodging) && !isGrounded) return;
+
+            isJumping = true;
+            EnterPhysicsMode();
+        };
+
+        inputActions.Player.Jump.canceled += ctx =>
+        {
+            isJumping = false;
+        };
 
 
     }
@@ -156,8 +167,12 @@ public class BasePlayer : MonoBehaviour
     {
         if (isInPhysicsMode) return;
 
-        characterController.Move(velocity * Time.deltaTime);
+        Move();
+        isGrounded = characterController.isGrounded;
+    }
 
+    public virtual void Move()
+    {
         if (movementDir.magnitude > 0.1f)
         {
             // Calculate the camera-relative movement direction
@@ -181,11 +196,43 @@ public class BasePlayer : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, moveRotationSpeed * moveSpeed * Time.deltaTime);
             }
         }
+        else
+        {
+            characterController.Move(velocity * Time.deltaTime);
+        }
+        isGrounded = gravityBody.groundCheck.isGrounded;
     }
 
     void FixedUpdate()
     {
 
+        Jump();
+
+        if (isInPhysicsMode && isGrounded)
+        {
+            ExitPhysicsMode();
+        }
+    }
+
+    public virtual void Jump()
+    {
+        if (isJumping && jumpTimer < jumpMaxHoldTime)
+        {
+            // Apply jump force
+            rb.AddForce(-gravityBody.currGravDirection * jumpHoldForce, ForceMode.Impulse);
+            jumpTimer += Time.fixedDeltaTime;
+        }
+        else if (isJumping && jumpTimer >= jumpMaxHoldTime)
+        {
+            // Stop applying jump force after max hold time
+            isJumping = false;
+            jumpTimer = 0f;
+            //ExitPhysicsMode();
+        }
+        else if (!isJumping)
+        {
+            jumpTimer = 0f;
+        }
     }
 
     private IEnumerator Dodge()
@@ -213,15 +260,15 @@ public class BasePlayer : MonoBehaviour
     {
         characterController.enabled = false;
         rb.isKinematic = false;
-        gravityBody.EnableGravity(); // use gravity from GravityBody
+        //gravityBody.EnableGravity(); // use gravity from GravityBody
         isInPhysicsMode = true;
     }
 
     private void ExitPhysicsMode()
     {
-        rb.linearVelocity = Vector3.zero;
+        rb.linearVelocity = gravityBody.currGravDirection;
         rb.isKinematic = true;
-        gravityBody.DisableGravity(); // stop applying force when back in CC
+        //gravityBody.DisableGravity(); // stop applying force when back in CC
         characterController.enabled = true;
         isInPhysicsMode = false;
     }
