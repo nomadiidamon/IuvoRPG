@@ -13,6 +13,8 @@ public class BasePlayer : MonoBehaviour
     [SerializeField] private GravityBody gravityBody;
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody rb;
+    private Transform camTransform;
+
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -36,6 +38,8 @@ public class BasePlayer : MonoBehaviour
     [Header("Runtime Values")]
     [SerializeField] private Vector3 movementDir;
     [SerializeField] private Vector3 lookDirection;
+    [SerializeField] private float xRotation;
+    [SerializeField] private float yRotation;
     [SerializeField] private Vector3 velocity;
     [Space(2)]
     [SerializeField] private float jumpTimer = 0f;
@@ -59,6 +63,12 @@ public class BasePlayer : MonoBehaviour
         gravityBody.onlyApplyGravityWhenAirborne = false; // We'll handle that here.
 
         SetUpInputs();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        camTransform = SceneManager.Instance.cam.transform;
+
     }
 
     void SetUpInputs()
@@ -69,11 +79,12 @@ public class BasePlayer : MonoBehaviour
         inputActions.Player.Move.performed += ctx =>
         {
             Vector2 moveInput = ctx.ReadValue<Vector2>();
-            movementDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+            movementDir = new Vector3(moveInput.x, 0, moveInput.y);
+
             velocity = movementDir * moveSpeed;
             animator.SetFloat("Velocity", velocity.magnitude);
-            animator.SetFloat("DirectionX", movementDir.x);
-            animator.SetFloat("DirectionY", movementDir.z);
+            animator.SetFloat("DirectionX", moveInput.x);
+            animator.SetFloat("DirectionY", moveInput.y);
         };
         inputActions.Player.Move.canceled += ctx =>
         {
@@ -90,7 +101,7 @@ public class BasePlayer : MonoBehaviour
             lookDirection = new Vector3(lookInput.x, 0, lookInput.y).normalized;
             if (lookDirection != Vector3.zero)
             {
-
+                
             }
         };
 
@@ -147,6 +158,29 @@ public class BasePlayer : MonoBehaviour
 
         characterController.Move(velocity * Time.deltaTime);
 
+        if (movementDir.magnitude > 0.1f)
+        {
+            // Calculate the camera-relative movement direction
+            Vector3 camForward = camTransform.forward;
+            camForward.y = 0;
+            camForward.Normalize();
+
+            Vector3 camRight = camTransform.right;
+            camRight.y = 0;
+            camRight.Normalize();
+
+            Vector3 moveDir = camForward * movementDir.z + camRight * movementDir.x;
+            moveDir.Normalize();
+
+            velocity = moveDir * moveSpeed;
+            characterController.Move(velocity * Time.deltaTime);
+
+            if (moveDir.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, moveRotationSpeed * moveSpeed * Time.deltaTime);
+            }
+        }
     }
 
     void FixedUpdate()

@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static SceneManager Instance;
+    public Camera cam;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
+
     void Start()
     {
+        cam = GetComponent<Camera>();
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
