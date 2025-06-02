@@ -1,14 +1,16 @@
+using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class SecondNewPlayer : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private InputSystem_Actions inputActions;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Animator animator;
-    [SerializeField] private PlayerCameraManager cameraManager;
+    [Space(2)]
+    [SerializeField] private PlayerUIHandler playerUIManager;
+    [SerializeField] private PlayerInputHandler inputManager;
+    [SerializeField] private PlayerCameraHandler cameraManager;
     [SerializeField] private Transform camTransform;
 
 
@@ -22,8 +24,7 @@ public class SecondNewPlayer : MonoBehaviour
     public float moveRotationSpeed = 0.75f;
 
     [Header("AimSettings")]
-    public float aimDistance;
-    public Vector3 aimTarget;
+    [SerializeField] private SecondPlayerAimHandler aimManager;
 
     [Header("Custom Gravity Settings")]
     public Vector3 customGravityDirection = Vector3.down;
@@ -31,87 +32,60 @@ public class SecondNewPlayer : MonoBehaviour
 
     [Space(5)]
     [Header("Runtime Values")]
-    [SerializeField] private Vector3 movementDir;
+    [SerializeField] public Vector3 movementDir;
     [Space(2)]
     [SerializeField] private bool isGrounded = false;
+    [SerializeField] private bool isMoving = false;
     [SerializeField] private bool isSprinting = false;
     [SerializeField] private bool isAiming = false;
+
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         originalMoveSpeed = moveSpeed;
-        SetUpInputs();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         if (camTransform == null)
         {
             camTransform = SceneManager.Instance.cam.transform;
         }
-        
+
+        SetUpInputs();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        aimManager.playerTransform = transform;
     }
 
     void SetUpInputs()
     {
-        inputActions = new InputSystem_Actions();
-        inputActions.Player.Enable();
+        if (inputManager == null)
+        {
+            Debug.LogError("PlayerInputManager is not assigned.");
+            return;
+        }
 
-        inputActions.Player.Move.performed += ctx =>
-        {
-            Vector2 moveInput = ctx.ReadValue<Vector2>();
-            movementDir = new Vector3(moveInput.x, 0, moveInput.y);
-
-            animator.SetFloat("DirectionX", moveInput.x);
-            animator.SetFloat("DirectionY", moveInput.y);
-        };
-        inputActions.Player.Move.canceled += ctx =>
-        {
-            movementDir = Vector3.zero; 
-            animator.SetFloat("DirectionX", 0f);
-            animator.SetFloat("DirectionY", 0f);
-        };
-
-
-        inputActions.Player.Sprint.performed += ctx =>
-        {
-            moveSpeed = originalMoveSpeed * sprintMultiplier;
-            isSprinting = true;
-        };
-        inputActions.Player.Sprint.canceled += ctx =>
-        {
-            moveSpeed = originalMoveSpeed;
-            isSprinting = false;
-        };
-
-        inputActions.Player.Aim.performed += ctx =>
-        {
-            cameraManager.SwitchCameraStyles(CameraStyle.THIRD_PERSON_SHOOTER);
-            isAiming = true;
-            animator.SetBool("IsAiming", isAiming);
-        };
-        inputActions.Player.Aim.canceled += ctx =>
-        {
-            cameraManager.SwitchCameraStyles(CameraStyle.EXPLORATION);
-            isAiming = false;
-            animator.SetBool("IsAiming", isAiming);
-        };
+        inputManager.OnMovePerformed.AddListener(OnMoveInput);
+        inputManager.OnMoveCanceled.AddListener(OnMoveCanceled);
+        inputManager.OnSprintStarted.AddListener(OnSprintStarted);
+        inputManager.OnSprintCanceled.AddListener(OnSprintCanceled);
+        inputManager.OnAimStarted.AddListener(OnAimStarted);
+        inputManager.OnAimCanceled.AddListener(OnAimCanceled);
+        inputManager.OnSwitchShoulders.AddListener(OnSwitchShoulders);
     }
-
 
     void Update()
     {
         Move();
-        Aim();
+        aimManager.UpdateAim(isAiming, isMoving, movementDir);
+
     }
-
-
 
     public virtual void Move()
     {
         if (movementDir.magnitude > 0.1f)
         {
+            isMoving = true;
             // Calculate the camera-relative movement direction
             Vector3 camForward = camTransform.forward;
             camForward.y = 0;
@@ -126,65 +100,77 @@ public class SecondNewPlayer : MonoBehaviour
 
             characterController.Move(moveDir * moveSpeed * Time.deltaTime);
 
-            if (moveDir.sqrMagnitude > 0.001f && !isAiming)
+            if (moveDir.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, moveRotationSpeed * moveSpeed * Time.deltaTime);
+                if (!isAiming)
+               {
+                    Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, moveRotationSpeed * moveSpeed * Time.deltaTime);
+               }
             }
+            Debug.DrawRay(transform.position, moveDir.normalized * 2f, Color.green);
         }
         else
         {
+            isMoving = false;
             characterController.Move(customGravityDirection * 0.1f * Time.deltaTime);
         }
         isGrounded = characterController.isGrounded;
     }
 
-    public virtual void Aim()
+    #region InputCallbacks
+    void OnMoveInput(Vector2 moveInput)
     {
-        // get a reference to the center of the screen.
-        //aimTarget = SceneManager.Instance.cam.ScreenPointToRay();
-        // rotate the player to face that aimed direction
+        movementDir = new Vector3(moveInput.x, 0, moveInput.y);
+        animator.SetFloat("DirectionX", moveInput.x);
+        animator.SetFloat("DirectionY", moveInput.y);
+    }
 
+    void OnMoveCanceled()
+    {
+        movementDir = Vector3.zero;
+        animator.SetFloat("DirectionX", 0f);
+        animator.SetFloat("DirectionY", 0f);
+    }
 
-        // Get a ray from the center of the screen
-        Ray ray = SceneManager.Instance.cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
-        RaycastHit hit;
+    void OnSprintStarted()
+    {
+        moveSpeed = originalMoveSpeed * sprintMultiplier;
+        isSprinting = true;
+    }
 
-        // Default aim distance if nothing is hit
-        float maxAimDistance = 100f;
-        Vector3 targetPoint;
+    void OnSprintCanceled()
+    {
+        moveSpeed = originalMoveSpeed;
+        isSprinting = false;
+    }
 
-        if (Physics.Raycast(ray, out hit, maxAimDistance))
-        {
-            targetPoint = hit.point;
-            aimDistance = hit.distance;
-        }
-        else
-        {
-            targetPoint = ray.origin + ray.direction * maxAimDistance;
-            aimDistance = maxAimDistance;
-        }
+    void OnAimStarted()
+    {
+        playerUIManager.AimReticle.transform.localScale *= 2;
+        cameraManager.SwitchCameraStyles(CameraStyle.THIRD_PERSON_SHOOTER);
+        isAiming = true;
+        animator.SetBool("IsAiming", true);
+    }
 
-        aimTarget = targetPoint;
+    void OnAimCanceled()
+    {
+        playerUIManager.AimReticle.transform.localScale /= 2;
+        cameraManager.SwitchCameraStyles(CameraStyle.EXPLORATION);
+        isAiming = false;
+        animator.SetBool("IsAiming", false);
+    }
 
-        // Rotate the player to face the aim direction when aiming
+    void OnSwitchShoulders()
+    {
+
         if (isAiming)
         {
-            Vector3 lookDirection = (aimTarget - transform.position);
-            lookDirection.y = 0; // Keep only horizontal rotation
-            if (lookDirection.sqrMagnitude > 0.001f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, moveRotationSpeed * Time.deltaTime);
-            }
+            Debug.Log("Shoulder Switched");
+
+            aimManager.ToggleShoulder();
+
         }
-
     }
-
-    void FixedUpdate()
-    {
-
-
-    }
-
+    #endregion
 }

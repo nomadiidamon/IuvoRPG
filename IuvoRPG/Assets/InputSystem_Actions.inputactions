@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "MultiTap",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchShoulders",
+                    "type": "Button",
+                    "id": "6c5e1827-5aec-4523-8c44-5259d885dcc5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -539,6 +548,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Charge_2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20e99266-ce99-4992-8dec-b71bb9d4b043",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "SwitchShoulders",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbced6b6-dfa4-43e7-b3e5-652622f8e808",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SwitchShoulders",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

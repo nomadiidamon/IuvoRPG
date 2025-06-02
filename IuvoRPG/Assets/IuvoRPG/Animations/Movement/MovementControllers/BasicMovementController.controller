@@ -273,20 +273,20 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -7069703914140087024}
-    second:
-    - {fileID: -3234707588121294122}
   - first: {fileID: -6025056186425894681}
     second:
     - {fileID: 8397256994970891470}
     - {fileID: 8054479361498683837}
-  - first: {fileID: -4937127277676376054}
-    second:
-    - {fileID: 2389167734084546604}
   - first: {fileID: 1484638132441488955}
     second:
     - {fileID: 3025550039534365}
     - {fileID: -1335401740307864398}
+  - first: {fileID: -4937127277676376054}
+    second:
+    - {fileID: 2389167734084546604}
+  - first: {fileID: -7069703914140087024}
+    second:
+    - {fileID: -3234707588121294122}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
@@ -627,7 +627,7 @@ BlendTree:
   m_Name: Aim Blend
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 2eae2e56cbab5c14ca887fae2f170918, type: 2}
+    m_Motion: {fileID: 7400000, guid: e3987817ddff0b9418b0298cdcd21252, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -642,34 +642,10 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Velocity
     m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 18855fd71aa380648a2ebda78b5f1eee, type: 2}
-    m_Threshold: 0.125
-    m_Position: {x: -1, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Velocity
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d26b2eea52183fb4eab99454cbbc0dc3, type: 2}
-    m_Threshold: 0.1875
-    m_Position: {x: 1, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Velocity
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 7406e8b4ddcc7c442984999e887369e3, type: 2}
-    m_Threshold: 0.25
-    m_Position: {x: 0, y: -1}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Velocity
-    m_Mirror: 0
   m_BlendParameter: DirectionX
   m_BlendParameterY: DirectionY
   m_MinThreshold: 0
-  m_MaxThreshold: 0.25
+  m_MaxThreshold: 0.0625
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 2

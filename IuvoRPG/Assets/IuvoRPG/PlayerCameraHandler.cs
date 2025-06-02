@@ -15,17 +15,17 @@ public enum CameraStyle
 }
 
 [Serializable]
-public class PlayerCameraManager : MonoBehaviour
+public class PlayerCameraHandler : MonoBehaviour
 {
 
     [SerializeField] private CameraStyle currentCameraStyle;
 
     [Header("Cinemachine Cameras")]
-    [SerializeField] private CinemachineCamera explorationCam;
-    [SerializeField] private CinemachineCamera tpsCam;
-    [SerializeField] private CinemachineCamera fpsCam;
-    [SerializeField] private CinemachineCamera combatCam;
-    [SerializeField] private CinemachineCamera cinematicCam;
+    [SerializeField] public CinemachineCamera explorationCam;
+    [SerializeField] public CinemachineCamera tpsCam;
+    [SerializeField] public CinemachineCamera fpsCam ;
+    [SerializeField] public CinemachineCamera combatCam ;
+    [SerializeField] public CinemachineCamera cinematicCam;
 
     private Dictionary<CameraStyle, CinemachineCamera> camDict;
 
