@@ -5,25 +5,18 @@ using UnityEditor.Rendering.LookDev;
 public class SecondPlayerAimHandler : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] public Transform playerTransform;
+    [SerializeField] public Transform playerForward;
     [SerializeField] private Transform camTransform;
+    [SerializeField] private Transform aimTarget;
     [SerializeField] private PlayerCameraHandler cameraManager;
-    [SerializeField] private CinemachinePositionComposer positionComposer;
+    [SerializeField] private CinemachineCamera tpsCamera;
 
 
     [Header("Settings")]
     [SerializeField] private float aimRotationSpeed = 10f;
-    [SerializeField] private float moveRotationSpeed = 5f;
     [SerializeField] private float maxAimDistance = 100f;
-    [SerializeField] private float shoulderSwitchSpeed = 5f;
-    [SerializeField] private int rightSideMaxAimPan = 45;
-    [SerializeField] private int rightSideMinAimPan = -45;
-    [SerializeField] private int leftSideMaxAimPan = 45;
-    [SerializeField] private int leftSideMinAimPan = -45;
 
-    private bool hasSwitchedShoulderAutomatically = false;
-    private bool rightShoulder = true;
-    private float cameraSide = 1.0f;
+
 
     private Ray ray;
     private RaycastHit hit;
@@ -35,14 +28,19 @@ public class SecondPlayerAimHandler : MonoBehaviour
 
     private void Awake()
     {
-        cameraSide = positionComposer.TargetOffset.x;
+        tpsCamera = cameraManager.tpsCam;
+        ray.origin = tpsCamera.transform.position;
+        ray.direction = tpsCamera.transform.forward * 100.0f;
     }
 
     public void UpdateAim(bool isAiming, bool isMoving, Vector3 playerMoveDir)
     {
-        ray = SceneManager.Instance.cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
+        if (CurrentCameraStyle == CameraStyle.EXPLORATION) return;
+        ray.origin = camTransform.position;
+        ray.direction = camTransform.forward * 100.0f;
 
-        Vector3 targetPoint;
+        Vector3 targetPoint = Vector3.zero;
+
         if (Physics.Raycast(ray, out hit, maxAimDistance))
         {
             targetPoint = hit.point;
@@ -54,6 +52,7 @@ public class SecondPlayerAimHandler : MonoBehaviour
             AimDistance = maxAimDistance;
         }
 
+        aimTarget.position = targetPoint;
         AimTarget = targetPoint;
 
         if (isAiming)
@@ -71,45 +70,24 @@ public class SecondPlayerAimHandler : MonoBehaviour
             moveDir = camForward * playerMoveDir.z + camRight * playerMoveDir.x;
             moveDir.y = 0;
 
+            Quaternion targetRot = playerForward.rotation;
+            targetRot.y = aimTarget.rotation.y;
 
-            Vector3 lookDir;
-            if (isMoving && moveDir.sqrMagnitude > 0.001f)
-            {
-                lookDir = moveDir.normalized;
-            }
-            else
-            {
-                lookDir = camForward;
-            }
+            playerForward.rotation = targetRot;
 
-            if (lookDir.sqrMagnitude > 0.001f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(lookDir);
-                playerTransform.rotation = Quaternion.Slerp(
-                    playerTransform.rotation,
-                    targetRotation,
-                    aimRotationSpeed * Time.deltaTime
-                );
-            }
-            Debug.DrawRay(playerTransform.position, lookDir * 2f, Color.red);
+            //Quaternion targetRotation = Quaternion.LookRotation(aimTarget.position);
+            //transform.rotation = Quaternion.Slerp(
+            //    playerTransform.rotation,
+            //    targetRotation,
+            //    aimRotationSpeed * Time.deltaTime
+            //);
+
         }
 
-        //SmoothShoulderToggle();
     }
 
 
 
-    private void SmoothShoulderToggle()
-    {
-        float targetSide = rightShoulder ? cameraSide : -cameraSide;
-        positionComposer.TargetOffset.x = Mathf.Lerp(positionComposer.TargetOffset.x, targetSide, shoulderSwitchSpeed * Time.deltaTime);
-    }
-
-    public void ToggleShoulder()
-    {
-        rightShoulder = !rightShoulder;
-        SmoothShoulderToggle();
-    }
 
     public void GetRay(out Ray ray) => ray = this.ray;
     public void GetRayHit(out RaycastHit hit) => hit = this.hit;

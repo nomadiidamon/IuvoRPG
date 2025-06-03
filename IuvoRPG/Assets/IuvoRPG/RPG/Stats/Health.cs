@@ -7,7 +7,8 @@ public class Health : Stat, IRecharge
     [SerializeField] private int currentHealth = 35;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int maxRechargeValue = 75;
-
+    
+    [Header("IRecharge")]
     [SerializeField] private float rechargeAmount = 5.0f;
     [SerializeField] private float rechargeSpeed = 0.25f;
 

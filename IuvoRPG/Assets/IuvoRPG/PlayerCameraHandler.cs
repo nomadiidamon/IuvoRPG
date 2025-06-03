@@ -17,6 +17,8 @@ public enum CameraStyle
 [Serializable]
 public class PlayerCameraHandler : MonoBehaviour
 {
+    [SerializeField] private Transform playerForward;
+    [SerializeField] private Transform playerAim;
 
     [SerializeField] private CameraStyle currentCameraStyle;
 
@@ -71,6 +73,15 @@ public class PlayerCameraHandler : MonoBehaviour
         else
         {
             Debug.LogWarning($"No camera assigned for {currentCameraStyle}.");
+        }
+    }
+
+    private void Update()
+    {
+        foreach (var cam in camDict)
+        {
+            cam.Value.transform.forward = playerForward.forward;
+            cam.Value.transform.LookAt(playerAim);
         }
     }
 

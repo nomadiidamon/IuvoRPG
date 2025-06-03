@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using IuvoUnity._Extensions;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -12,6 +13,7 @@ public class SecondNewPlayer : MonoBehaviour
     [SerializeField] private PlayerInputHandler inputManager;
     [SerializeField] private PlayerCameraHandler cameraManager;
     [SerializeField] private Transform camTransform;
+    [SerializeField] private Transform playerForward;
 
 
     [Header("Movement Settings")]
@@ -54,7 +56,7 @@ public class SecondNewPlayer : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        aimManager.playerTransform = transform;
+        aimManager.playerForward = playerForward;
     }
 
     void SetUpInputs()
@@ -78,7 +80,11 @@ public class SecondNewPlayer : MonoBehaviour
     {
         Move();
         aimManager.UpdateAim(isAiming, isMoving, movementDir);
-
+        if (aimManager.playerForward != playerForward)
+        {
+            aimManager.playerForward = playerForward;
+            
+        }
     }
 
     public virtual void Move()
@@ -103,12 +109,12 @@ public class SecondNewPlayer : MonoBehaviour
             if (moveDir.sqrMagnitude > 0.001f)
             {
                 if (!isAiming)
-               {
+                {
                     Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, moveRotationSpeed * moveSpeed * Time.deltaTime);
-               }
+                    playerForward.transform.rotation = Quaternion.Slerp(playerForward.transform.rotation, targetRotation, moveRotationSpeed * moveSpeed * Time.deltaTime);
+                }
             }
-            Debug.DrawRay(transform.position, moveDir.normalized * 2f, Color.green);
+            Debug.DrawRay(playerForward.transform.position, moveDir.normalized * 2f, Color.green);
         }
         else
         {
@@ -168,7 +174,7 @@ public class SecondNewPlayer : MonoBehaviour
         {
             Debug.Log("Shoulder Switched");
 
-            aimManager.ToggleShoulder();
+           // aimManager.ToggleShoulder();
 
         }
     }

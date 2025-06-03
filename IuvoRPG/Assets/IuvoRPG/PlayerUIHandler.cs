@@ -5,7 +5,7 @@ public class PlayerUIHandler : MonoBehaviour
 {
     [Header("Player reference")]
     [SerializeField] public SecondNewPlayer player;
-    [SerializeField] public Health playerHealth;
+    [SerializeField] public PlayerStatHandler playerStatHandler;
 
     [Header("UI Components")]
     [SerializeField] public GameObject UI;
@@ -13,28 +13,14 @@ public class PlayerUIHandler : MonoBehaviour
     [Header("Player HUD")]
     [SerializeField] public GameObject PlayerHUD;
     [SerializeField] public Image healthBarImage;
+    [SerializeField] public Image staminaBarImage;
+    [SerializeField] public Image manaBarImage;
+    [SerializeField] public Image expBarImage;
+
 
     [SerializeField] public GameObject PlayerStats;
     [SerializeField] public GameObject PlayerToolBag;
     [SerializeField] public GameObject AimReticle;
-    [Space(5)]
-    [SerializeField] private float playerCurrentHealth;
-    [SerializeField] private float playerMaxHealth;
-    [SerializeField] private float playerMinHealth;
-    [Space(2)]
-    [SerializeField] private float playerCurrentStamina;
-    [SerializeField] private float playerMaxStamina;
-    [SerializeField] private float playerMinStamina;
-    [Space(2)]
-    [SerializeField] private float playerCurrentMana;
-    [SerializeField] private float playerMaxMana;
-    [SerializeField] private float playerMinMana;
-    [Space(2)]
-    [SerializeField] private float playerCurrentExperience;
-    [SerializeField] private float playerMaxExperience;
-    [SerializeField] private float playerMinExperience;
-    [Space(2)]
-    [SerializeField] private int playerLevel;
 
 
     private void Awake()
@@ -63,6 +49,10 @@ public class PlayerUIHandler : MonoBehaviour
         {
             Debug.LogError("Player object must not be null");
         }
+        if (playerStatHandler == null)
+        {
+            Debug.LogError("Player Stat Handler must not be null");
+        }
 
     }
 
@@ -73,11 +63,34 @@ public class PlayerUIHandler : MonoBehaviour
 
     void Update()
     {
+        UpdatePlayerHUD();
+    }
+
+    void UpdatePlayerHUD()
+    {
         UpdatePlayerHealthBar();
+        UpdatePlayerStaminaBar();
+        UpdatePlayerManaBar();
+        UpdateExpBar();
     }
 
     void UpdatePlayerHealthBar()
     {
-        healthBarImage.fillAmount = ((float)playerHealth.GetCurrentHealth()/playerHealth.GetMaxHealth());
+        healthBarImage.fillAmount = ((float)playerStatHandler.playerHealth.GetCurrentHealth()/ playerStatHandler.playerHealth.GetMaxHealth());
+    }
+
+    void UpdatePlayerStaminaBar()
+    {
+        staminaBarImage.fillAmount = ((float)playerStatHandler.playerStamina.GetCurrentStamina() / playerStatHandler.playerStamina.GetMaxStamina());
+    }
+
+    private void UpdatePlayerManaBar()
+    {
+        manaBarImage.fillAmount = ((float)playerStatHandler.playerMana.GetCurrentMana() / playerStatHandler.playerMana.GetMaxMana());
+    }
+
+    private void UpdateExpBar()
+    {
+        expBarImage.fillAmount = ((float)playerStatHandler.playerLevel.GetCurrentExperience() / playerStatHandler.playerLevel.GetExpToNextLevel());
     }
 }
