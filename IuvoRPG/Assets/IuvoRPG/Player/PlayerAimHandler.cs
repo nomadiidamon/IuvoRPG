@@ -45,6 +45,11 @@ public class PlayerAimHandler : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+      playerTransform = PlayerManager.Instance.playerRef.transform;
+    }
+
     public void UpdateAim(bool isAiming)
     {
         ray = SceneManager.Instance.cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));

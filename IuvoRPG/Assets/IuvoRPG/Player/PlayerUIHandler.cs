@@ -76,21 +76,21 @@ public class PlayerUIHandler : MonoBehaviour
 
     void UpdatePlayerHealthBar()
     {
-        healthBarImage.fillAmount = ((float)playerStatHandler.playerHealth.GetCurrentHealth()/ playerStatHandler.playerHealth.GetMaxHealth());
+        healthBarImage.fillAmount = ((float)playerStatHandler.GetPlayerHealth().GetCurrentHealth()/ playerStatHandler.GetPlayerHealth().GetMaxHealth());
     }
 
     void UpdatePlayerStaminaBar()
     {
-        staminaBarImage.fillAmount = ((float)playerStatHandler.playerStamina.GetCurrentStamina() / playerStatHandler.playerStamina.GetMaxStamina());
+        staminaBarImage.fillAmount = ((float)playerStatHandler.GetPlayerStamina().GetCurrentStamina() / playerStatHandler.GetPlayerStamina().GetMaxStamina());
     }
 
     private void UpdatePlayerManaBar()
     {
-        manaBarImage.fillAmount = ((float)playerStatHandler.playerMana.GetCurrentMana() / playerStatHandler.playerMana.GetMaxMana());
+        manaBarImage.fillAmount = ((float)playerStatHandler.GetPlayerMana().GetCurrentMana() / playerStatHandler.GetPlayerMana().GetMaxMana());
     }
 
     private void UpdateExpBar()
     {
-        expBarImage.fillAmount = ((float)playerStatHandler.playerLevel.GetCurrentExperience() / playerStatHandler.playerLevel.GetExpToNextLevel());
+        expBarImage.fillAmount = ((float)playerStatHandler.GetPlayerLevel().GetCurrentExperience() / playerStatHandler.GetPlayerLevel().GetExpToNextLevel());
     }
 }
