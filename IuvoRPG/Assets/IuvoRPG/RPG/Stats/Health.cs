@@ -7,7 +7,8 @@ public class Health : Stat, IRecharge
     [SerializeField] private int currentHealth = 35;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int maxRechargeValue = 75;
-    
+    [SerializeField] private float statLerpSpeed = 0.43f;
+
     [Header("IRecharge")]
     [SerializeField] private float rechargeAmount = 5.0f;
     [SerializeField] private float rechargeSpeed = 0.25f;
@@ -17,6 +18,13 @@ public class Health : Stat, IRecharge
 
     public float currentTime = 0.0f;
 
+    public FlexibleEvent OnTakeDamage;
+
+    public void Start()
+    {
+        OnTakeDamage = new FlexibleEvent();
+    }
+
     public void Update()
     {
         Recharge();
@@ -25,14 +33,14 @@ public class Health : Stat, IRecharge
     public void Recharge()
     {
         if (currentHealth != maxRechargeValue)
-        {   
-            if(currentTime >= _RechargeSpeed)
+        {
+            if (currentTime >= _RechargeSpeed)
             {
                 currentTime = 0.0f;
                 currentHealth += (int)_RechargeAmount;
-                currentHealth = Mathf.Clamp(currentHealth + (int) _RechargeAmount, 0, maxRechargeValue);
+                currentHealth = Mathf.Clamp(currentHealth + (int)_RechargeAmount, 0, maxRechargeValue);
             }
-            currentTime += Time.deltaTime;        
+            currentTime += Time.deltaTime;
         }
     }
 
@@ -42,7 +50,12 @@ public class Health : Stat, IRecharge
     public bool IsHealthGone() => currentHealth <= 0;
     public void SetMaxHealth(int newMaxHealth) => maxHealth = newMaxHealth;
     public void Heal(int healAmount) => currentHealth = Mathf.Clamp(currentHealth + healAmount, 0, maxHealth);
-    public void TakeDamage(int damageAmount) => currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, currentHealth);
+    public void TakeDamage(int damageAmount)
+    {
+        StartCoroutine(LerpStatValue(currentHealth, currentHealth - damageAmount, 0, maxHealth, statLerpSpeed));
+        OnTakeDamage.Invoke();
+    }
+
     #endregion
 }
 

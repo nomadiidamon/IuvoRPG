@@ -5,6 +5,7 @@ public class PlayerUIHandler : MonoBehaviour
 {
     [Header("Player reference")]
     [SerializeField] public SecondNewPlayer player;
+    [SerializeField] public Player myPlayer;
     [SerializeField] public PlayerStatHandler playerStatHandler;
 
     [Header("UI Components")]
@@ -45,7 +46,11 @@ public class PlayerUIHandler : MonoBehaviour
         {
             Debug.LogError("AimReticle object must not be null");
         }
-        if (player == null)
+        //if (player == null)
+        //{
+        //    Debug.LogError("Player object must not be null");
+        //}
+        if (myPlayer == null)
         {
             Debug.LogError("Player object must not be null");
         }

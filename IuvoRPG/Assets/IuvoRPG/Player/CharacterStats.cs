@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class PlayerStatHandler : MonoBehaviour
+public class CharacterStats : MonoBehaviour
 {
-    [Header("Player Level & Experience")]
+
+    [Header("Character Level & Experience")]
     [SerializeField] private Level playerLevel;
 
-    [Header("Player Core Stats")]
+    [Header("Character Core Stats")]
     [SerializeField] private Health playerHealth;   // effects player's life expectancey, determined by various other stats
     [SerializeField] private Stamina playerStamina; // effects how many actions a player can take before needing a break
     [SerializeField] private Mana playerMana; // effects how many speels or special actions can be done before needing a break
 
 
-    [Header("Player Additional Stats")]
+    [Header("Character Additional Stats")]
     [SerializeField] public Strength playerStrength;    // effects attack power with strength weapons and improves resistances
     [SerializeField] public Dexterity playerDexterity;  // effects attack power with dexterious weapons and attack speed
 
@@ -24,27 +25,15 @@ public class PlayerStatHandler : MonoBehaviour
     [SerializeField] public Intelligence playerIntelligence;    // effects magical attack power, improves perception
     [SerializeField] public Wisdom playerWisdom;    // effects mana level, magic duration, and improves perception
 
-
-
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
 
+    // Update is called once per frame
     void Update()
     {
         
     }
-
-    #region Getters & Setters
-
-    public Level GetPlayerLevel() => playerLevel;
-    public Health GetPlayerHealth() => playerHealth;
-    public Stamina GetPlayerStamina() => playerStamina;
-    public Mana GetPlayerMana() => playerMana;
-    
-
-
-    #endregion
 }
