@@ -14,8 +14,9 @@ public enum CameraStyle
     OTHER
 }
 
+// TODO: Transition class from Monobehaviour to POCO
 [Serializable]
-public class PlayerCameraHandler : MonoBehaviour
+public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
 {
     [SerializeField] private Transform playerForward;
     [SerializeField] private Transform playerAim;
@@ -31,8 +32,10 @@ public class PlayerCameraHandler : MonoBehaviour
 
     private Dictionary<CameraStyle, CinemachineCamera> camDict;
 
+    [SerializeField] public Context playerContext { get; set; }
 
-    void Start()
+
+    public void Start()
     {
         camDict = new Dictionary<CameraStyle, CinemachineCamera>
         {
@@ -54,7 +57,7 @@ public class PlayerCameraHandler : MonoBehaviour
         UpdateCameraStyle();
     }
 
-    void UpdateCameraStyle()
+    public void UpdateCameraStyle()
     {
 
         foreach (var kvp in camDict)
@@ -76,7 +79,7 @@ public class PlayerCameraHandler : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Update()
     {
         foreach (var cam in camDict)
         {
@@ -86,7 +89,7 @@ public class PlayerCameraHandler : MonoBehaviour
     }
 
 
-    bool CheckCameraStyle(CameraStyle style)
+    public bool CheckCameraStyle(CameraStyle style)
     {
         return currentCameraStyle == style;
     }

@@ -1,13 +1,19 @@
 using UnityEngine;
 
-public class PlayerRotationHandler : MonoBehaviour
+public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
 {
     [SerializeField] Transform playerTransform;
     [SerializeField] Transform cameraTransform;
     [SerializeField] Transform aimTargetTransform;
 
+    [SerializeField] float moveRotationSpeed = 2.5f;
+    [SerializeField] float aimRotationSpeed = 1.0f;
+
+    [SerializeField] public Context playerContext { get; set; }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         if (playerTransform == null) Debug.LogError("PlayerTransform can not be NULL");
 
@@ -18,9 +24,18 @@ public class PlayerRotationHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        Rotate();
+    }
+
+    public void Rotate()
+    {
+        AdjustPlayerCameraRotation();
+        UpdatePlayerCameraRotation();
+        AdjustPlayerRotation();
+        UpdatePlayerRotation();
+        SyncPlayerCameraAndPlayerRotations(0.02f);
     }
 
     public void AdjustPlayerCameraRotation()

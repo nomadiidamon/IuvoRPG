@@ -2,8 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// TODO: Transition class from Monobehaviour to POCO
 [RequireComponent (typeof(InputSystem_Actions))]
-public class PlayerInputHandler : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
 {
     private InputSystem_Actions inputActions;
 
@@ -18,12 +19,15 @@ public class PlayerInputHandler : MonoBehaviour
 
     public FlexibleEvent OnSwitchShoulders = new FlexibleEvent();
 
+    [SerializeField] public Context playerContext { get; set; }
+
+
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         inputActions.Player.Enable();
 
@@ -39,7 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
         inputActions.Player.SwitchShoulders.performed += HandleSwitchShoulders;
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         inputActions.Player.Disable();
 

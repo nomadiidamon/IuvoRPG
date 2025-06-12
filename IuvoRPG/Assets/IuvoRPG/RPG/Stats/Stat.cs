@@ -1,4 +1,5 @@
 using IuvoUnity._BaseClasses._RPG;
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -13,19 +14,24 @@ public class Stat : MonoBehaviour
 
     public IEnumerator LerpStatValue(int currentStatValue, int newStatValue, int minStatValue, int maxStatValue, float statLerpSpeed)
     {
-        currentStatValue = Mathf.Clamp((int)Mathf.Lerp(currentStatValue, newStatValue, statLerpSpeed * Time.deltaTime), minStatValue, maxStatValue);
+        float time = 0.0f;
 
-        CoroutineManager.Instance.waitForSecondsDictionary.TryGetValue(statLerpSpeed, out var result);
-        if (result != null)
+        while (time < statLerpSpeed)
         {
-            yield return result;
+            currentStatValue = Mathf.Clamp((int)Mathf.Lerp(currentStatValue, newStatValue, statLerpSpeed * Time.deltaTime), minStatValue, maxStatValue);
 
-        }
-        else
-        {
-            var speed = new WaitForSeconds(statLerpSpeed);
-            CoroutineManager.Instance.waitForSecondsDictionary.Add(statLerpSpeed, speed);
-            yield return speed;
+            time += Time.deltaTime;
+            CoroutineManager.Instance.waitForSecondsDictionary.TryGetValue(statLerpSpeed, out var result);
+            if (result != null)
+            {
+                yield return result;
+            }
+            else
+            {
+                var speed = new WaitForSeconds(statLerpSpeed);
+                CoroutineManager.Instance.waitForSecondsDictionary.Add(statLerpSpeed, speed);
+                yield return speed;
+            }
         }
     }
 

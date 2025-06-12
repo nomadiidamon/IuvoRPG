@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUIHandler : MonoBehaviour
+// TODO: Transition class from Monobehaviour to POCO
+public class PlayerUIHandler : MonoBehaviour, IPlayerHandler
 {
     [Header("Player reference")]
-    [SerializeField] public SecondNewPlayer player;
     [SerializeField] public Player myPlayer;
     [SerializeField] public PlayerStatHandler playerStatHandler;
 
@@ -23,8 +23,9 @@ public class PlayerUIHandler : MonoBehaviour
     [SerializeField] public GameObject PlayerToolBag;
     [SerializeField] public GameObject AimReticle;
 
+    [SerializeField] public Context playerContext { get; set; }
 
-    private void Awake()
+    public void Awake()
     {
         if (UI == null)
         {
@@ -46,10 +47,6 @@ public class PlayerUIHandler : MonoBehaviour
         {
             Debug.LogError("AimReticle object must not be null");
         }
-        //if (player == null)
-        //{
-        //    Debug.LogError("Player object must not be null");
-        //}
         if (myPlayer == null)
         {
             Debug.LogError("Player object must not be null");
@@ -61,12 +58,12 @@ public class PlayerUIHandler : MonoBehaviour
 
     }
 
-    void Start()
+    public void Start()
     {
         
     }
 
-    void Update()
+    public void Update()
     {
         UpdatePlayerHUD();
     }

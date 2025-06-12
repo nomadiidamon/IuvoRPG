@@ -1,12 +1,17 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
 public class FlexibleEvent
 {
+    // reference to c# delegates for cleanup
+    public List<Action> internalActions = new List<Action>();
     // C# delegate-based event
     private event Action internalEvent;
+
+    // reference to Unity delegats for cleanup
 
     // UnityEvent exposed to the inspector
     [SerializeField] private UnityEvent unityEvent = new UnityEvent();
@@ -22,12 +27,14 @@ public class FlexibleEvent
     public void AddListener(Action listener)
     {
         internalEvent += listener;
+        internalActions.Add(listener);
     }
 
     // Remove C# listener
     public void RemoveListener(Action listener)
     {
         internalEvent -= listener;
+        internalActions.Remove(listener);
     }
 
     // Add UnityAction listener (if needed in code)
@@ -40,6 +47,16 @@ public class FlexibleEvent
     public void RemoveUnityListener(UnityAction listener)
     {
         unityEvent.RemoveListener(listener);
+    }
+
+    public void RemoveAllFlexibleEventListeners()
+    {
+        foreach (var evt in internalActions)
+        {
+            RemoveListener(evt);
+        }
+
+        unityEvent.RemoveAllListeners();
     }
 }
 

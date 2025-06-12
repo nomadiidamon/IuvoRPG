@@ -1,7 +1,11 @@
 using UnityEngine;
 
-public class PlayerStatHandler : MonoBehaviour
+// TODO: Transition class from Monobehaviour to POCO
+public class PlayerStatHandler : MonoBehaviour, IPlayerHandler
 {
+    [SerializeField] public Context playerContext { get; set; }
+
+
     [Header("Player Level & Experience")]
     [SerializeField] private Level playerLevel;
 
@@ -27,14 +31,14 @@ public class PlayerStatHandler : MonoBehaviour
 
 
 
-    void Start()
+    public void Start()
     {
-        
+
     }
 
-    void Update()
+    public void Update()
     {
-        
+
     }
 
     #region Getters & Setters
@@ -43,7 +47,7 @@ public class PlayerStatHandler : MonoBehaviour
     public Health GetPlayerHealth() => playerHealth;
     public Stamina GetPlayerStamina() => playerStamina;
     public Mana GetPlayerMana() => playerMana;
-    
+
 
 
     #endregion
