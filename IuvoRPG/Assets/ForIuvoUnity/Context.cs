@@ -7,7 +7,7 @@ using UnityEngine;
 public enum ContextActorKey { Player, Target, Enemy, Camera, Interactable }
 public enum ContextStateKey { IsUnderAttack, IsVisible, IsMoving, IsGrounded, IsAiming, IsDead, IsPaused }
 public enum ContextStatKey { Health, MaxHealth, Mana, MaxMana, Stamina, MaxStamina, Experience, ExpToNextLevel, Score, DistanceToTarget, TimeSinceLastSeen, cooldownTime }
-public enum ContextTransformKey { Position, Destination, Velocity, Direction, LookTarget }
+public enum ContextTransformKey { Transform, Position, Destination, Velocity, Direction, LookTarget }
 public enum ContextEventKey { OnDamageTaken, OnDeath, OnItemPickup, OnObjectiveComplete, OnInteract }
 public enum ContextSystemKey { InputData, Inventory, DialogueState, QuestStatus, AudioCue }
 public enum ContextCustomKey { Custom0, Custom1, Custom2 }

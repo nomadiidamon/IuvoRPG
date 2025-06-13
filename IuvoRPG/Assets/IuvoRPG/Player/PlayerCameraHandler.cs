@@ -24,6 +24,8 @@ public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] private CameraStyle currentCameraStyle;
 
     [Header("Cinemachine Cameras")]
+    [SerializeField] public CinemachineCamera activeCam;
+
     [SerializeField] public CinemachineCamera explorationCam;
     [SerializeField] public CinemachineCamera tpsCam;
     [SerializeField] public CinemachineCamera fpsCam ;
@@ -68,7 +70,7 @@ public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
             }
         }
 
-        if (camDict.TryGetValue(currentCameraStyle, out var activeCam) && activeCam != null)
+        if (camDict.TryGetValue(currentCameraStyle, out activeCam) && activeCam != null)
         {
             activeCam.Priority = 20;
             Debug.Log($"Switched to {currentCameraStyle} camera.");
@@ -106,4 +108,6 @@ public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
     {
         return currentCameraStyle;
     }
+
+    public Transform GetCurrentCameraTransform() => activeCam.transform;
 }

@@ -3,27 +3,27 @@ using UnityEngine;
 public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
 {
     [SerializeField] Transform playerTransform;
-    [SerializeField] Transform cameraTransform;
+    [SerializeField] PlayerCameraHandler cameraHandler;
+    [SerializeField] PlayerAimHandler aimHandler;
+    [SerializeField] PlayerMovementHandler movementHandler;
+
     [SerializeField] Transform aimTargetTransform;
 
-    [SerializeField] float moveRotationSpeed = 2.5f;
-    [SerializeField] float aimRotationSpeed = 1.0f;
+    [SerializeField] float moveRotationSpeed = 5.5f;
+    [SerializeField] float aimRotationSpeed = 3.0f;
 
     [SerializeField] public Context playerContext { get; set; }
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
-        if (playerTransform == null) Debug.LogError("PlayerTransform can not be NULL");
-
-        if (cameraTransform == null) Debug.LogError("CameraTransform can not be NULL");
-
         if (aimTargetTransform == null) Debug.LogError("AimTargetTransform can not be NULL");
-
+        if (playerTransform == null) Debug.LogError("PlayerTransform cannot be NULL");
+        if (cameraHandler == null) Debug.LogError("CameraHandler cannot be NULL");
+        if (aimHandler == null) Debug.LogError("AimHandler cannot be NULL");
+        if (movementHandler == null) Debug.LogError("MovementHandler cannot be NULL");
     }
 
-    // Update is called once per frame
     public void Update()
     {
         Rotate();
@@ -31,40 +31,43 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
 
     public void Rotate()
     {
-        AdjustPlayerCameraRotation();
-        UpdatePlayerCameraRotation();
-        AdjustPlayerRotation();
-        UpdatePlayerRotation();
-        SyncPlayerCameraAndPlayerRotations(0.02f);
+        var cameraStyle = cameraHandler.GetCurrentCameraStyle();
+
+        switch (cameraStyle)
+        {
+            case CameraStyle.EXPLORATION:
+                RotateForMoving();
+                break;
+            case CameraStyle.THIRD_PERSON_SHOOTER:
+                RotateForAiming();
+                break;
+
+            // Add more cases for other camera styles as needed
+            default:
+                RotateForMoving();
+                break;
+        }
     }
 
-    public void AdjustPlayerCameraRotation()
+    public void RotateForAiming()
     {
 
     }
 
-    public void UpdatePlayerCameraRotation()
+    public void RotateForMoving()
     {
+        if (!playerContext.TryGet<bool>(ContextStateKey.IsMoving, out bool isMoving) || !isMoving)
+            return;
 
+        if (!playerContext.TryGet<Vector3>(ContextTransformKey.Direction, out Vector3 lastMoveDirection))
+            return;
+
+        if (lastMoveDirection == Vector3.zero)
+            return;
+
+        // Rotate the actual player transform toward the direction of movement
+        
     }
 
-    public void AdjustPlayerRotation()
-    {
-
-    }
-
-    public void UpdatePlayerRotation()
-    {
-
-    }
-
-    public void UpdatePlayerRotationOverTime(float adjustmentRate)
-    {
-
-    }
-
-    public void SyncPlayerCameraAndPlayerRotations(float aprox)
-    {
-
-    }
 }
+

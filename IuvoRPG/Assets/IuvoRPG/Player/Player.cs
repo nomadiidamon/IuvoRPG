@@ -61,7 +61,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    private void Start()
+    {
+        playerContext.Set<Player>(ContextActorKey.Player, this);
+        playerContext.Set<Transform>(ContextTransformKey.Transform, transform);
+        UpdateAllHandlerContexts();
+    }
+
     void Update()
     {
         // Update all handler's context

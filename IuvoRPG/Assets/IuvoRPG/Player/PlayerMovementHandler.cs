@@ -4,8 +4,7 @@ public class PlayerMovementHandler : MonoBehaviour, IPlayerHandler
 {
     [SerializeField] private CharacterController playerCharacterController;
     [SerializeField] private PlayerAnimatorHandler playerAnimatorHandler;
-    [SerializeField] private Transform camTransform;
-    [SerializeField] private Transform playerForward;
+    [SerializeField] private PlayerCameraHandler playerCameraHandler;
     [SerializeField] private Agility playerAgility;
 
     [SerializeField] public Context playerContext { get; set; }
@@ -33,28 +32,35 @@ public class PlayerMovementHandler : MonoBehaviour, IPlayerHandler
     public virtual void Move()
     {
         isGrounded = playerCharacterController.isGrounded;
+        playerContext.Set<bool>(ContextStateKey.IsGrounded, isGrounded);
+
         if (movementDir.magnitude > 0.1f)
         {
             isMoving = true;
-            // Calculate the camera-relative movement direction
-            Vector3 camForward = camTransform.forward;
+            playerContext.Set<bool>(ContextStateKey.IsMoving, isMoving);
+
+            Transform activeCam = playerCameraHandler.GetCurrentCameraTransform();
+            Vector3 camForward = activeCam.forward;
             camForward.y = 0;
             camForward.Normalize();
 
-            Vector3 camRight = camTransform.right;
+            Vector3 camRight = activeCam.right;
             camRight.y = 0;
             camRight.Normalize();
+
 
             Vector3 moveDir = camForward * movementDir.z + camRight * movementDir.x;
             moveDir.Normalize();
 
-            playerCharacterController.Move(moveDir * playerAgility.GetMoveSpeed(isSprinting) * Time.deltaTime);
+            playerContext.Set<Vector3>(ContextTransformKey.Direction, moveDir);
 
-            Debug.DrawRay(playerForward.transform.position, moveDir.normalized * 2f, Color.green);
+
+            playerCharacterController.Move(moveDir * playerAgility.GetMoveSpeed(isSprinting) * Time.deltaTime);
         }
         else
         {
             isMoving = false;
+            playerContext.Set<bool>(ContextStateKey.IsMoving, isMoving);
         }
         playerCharacterController.Move(customGravityDirection * customGravityStrength * Time.deltaTime);
     }
@@ -62,15 +68,15 @@ public class PlayerMovementHandler : MonoBehaviour, IPlayerHandler
     public void OnMoveInput(Vector2 moveInput)
     {
         movementDir = new Vector3(moveInput.x, 0, moveInput.y);
-        playerAnimatorHandler.animator.SetFloat("DirectionX", moveInput.x);
-        playerAnimatorHandler.animator.SetFloat("DirectionY", moveInput.y);
+            playerAnimatorHandler.animator.SetFloat("DirectionX", movementDir.x);
+            playerAnimatorHandler.animator.SetFloat("DirectionY", movementDir.z);
     }
 
     public void OnMoveCanceled()
     {
         movementDir = Vector3.zero;
-        playerAnimatorHandler.animator.SetFloat("DirectionX", 0f);
-        playerAnimatorHandler.animator.SetFloat("DirectionY", 0f);
+            playerAnimatorHandler.animator.SetFloat("DirectionX", 0f);
+            playerAnimatorHandler.animator.SetFloat("DirectionY", 0f);
     }
 
     public void OnSprintStarted()

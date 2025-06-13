@@ -426,7 +426,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 2194437996555965320}
-  cameraTransform: {fileID: 7937674650713594886}
+  cameraHandler: {fileID: 6884265747779145975}
+  aimHandler: {fileID: 7526292299205417973}
+  movementHandler: {fileID: 478211433}
   aimTargetTransform: {fileID: 6661959574595277570}
   moveRotationSpeed: 2.5
   aimRotationSpeed: 1
@@ -612,8 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacterController: {fileID: 8164228282134129235}
   playerAnimatorHandler: {fileID: 313168421}
-  camTransform: {fileID: 1080642983}
-  playerForward: {fileID: 2194437996555965320}
+  playerCameraHandler: {fileID: 6884265747779145975}
   playerAgility: {fileID: 308775209}
   customGravityDirection: {x: 0, y: -1, z: 0}
   customGravityStrength: 9.81
@@ -1123,11 +1124,6 @@ MeshFilter:
 --- !u!20 &1080642980 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2476942898257699036, guid: 3836e1e19df3594498e913867bc75134, type: 3}
-  m_PrefabInstance: {fileID: 5374954295839895978}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1080642983 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
   m_PrefabInstance: {fileID: 5374954295839895978}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1093494323
@@ -4082,8 +4078,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8609145530331626566}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12515016, y: 0.0000000026083962, z: -1.4706347e-10, w: 0.99213785}
-  m_LocalPosition: {x: 0, y: -0.15380478, z: 0.6992302}
+  m_LocalRotation: {x: 0.12499105, y: -0.0000000010392394, z: -1.4808667e-10, w: 0.9921579}
+  m_LocalPosition: {x: 0, y: -0.15706253, z: 0.70754814}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5668,7 +5664,7 @@ MonoBehaviour:
     Bottom:
       Radius: 2.5
       Height: 2
-    SplineCurvature: 0.698
+    SplineCurvature: 0.63
   RecenteringTarget: 2
   HorizontalAxis:
     Value: 0
@@ -6812,27 +6808,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 53.576195
+      value: 53.572937
       objectReference: {fileID: 0}
     - target: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.8007698
+      value: -0.79245186
       objectReference: {fileID: 0}
     - target: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99213785
+      value: 0.9921579
       objectReference: {fileID: 0}
     - target: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.12515019
+      value: 0.124991044
       objectReference: {fileID: 0}
     - target: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000002631721
+      value: -0.0000000010749555
       objectReference: {fileID: 0}
     - target: {fileID: 1905533221800253241, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -3.3197034e-10
+      value: 1.354218e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2476942898257699036, guid: 3836e1e19df3594498e913867bc75134, type: 3}
       propertyPath: field of view
@@ -7615,7 +7611,7 @@ Transform:
   m_GameObject: {fileID: 1922795873257505246}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2499998, y: 55.04, z: -13.920001}
+  m_LocalPosition: {x: 1.2499998, y: 55.04, z: -21.69}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7981,6 +7977,7 @@ MonoBehaviour:
   playerForward: {fileID: 2194437996555965320}
   playerAim: {fileID: 6661959574595277570}
   currentCameraStyle: 0
+  activeCam: {fileID: 0}
   explorationCam: {fileID: 8798779901716929134}
   tpsCam: {fileID: 4654986540067991143}
   fpsCam: {fileID: 2132604737052459570}
@@ -9774,7 +9771,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 8122659180141426280}
+    TrackingTarget: {fileID: 2194437996555965320}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:

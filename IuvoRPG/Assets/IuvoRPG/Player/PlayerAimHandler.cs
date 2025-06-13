@@ -64,6 +64,8 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
         {
             aimPoint = aimReferenceSphere.GetComponent<IStayHere>();
         }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void Update()
@@ -77,19 +79,21 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
         playerUIHandler.AimReticle.transform.localScale *= 2;
         cameraHandler.SwitchCameraStyles(CameraStyle.THIRD_PERSON_SHOOTER);
         isAiming = true;
-        playerAnimatorHandler.animator.SetBool("IsAiming", true);
+        //playerAnimatorHandler.animator.SetBool("IsAiming", true);
         int layerIndex = playerAnimatorHandler.animator.GetLayerIndex("Aim");
         StartCoroutine(StartAiming(layerIndex, aimSpeed));
-
+        playerContext.Set<bool>(ContextStateKey.IsAiming, isAiming);
     }
     public void OnAimCanceled()
     {
         playerUIHandler.AimReticle.transform.localScale /= 2;
         cameraHandler.SwitchCameraStyles(CameraStyle.EXPLORATION);
         isAiming = false;
-        playerAnimatorHandler.animator.SetBool("IsAiming", false);
+        //playerAnimatorHandler.animator.SetBool("IsAiming", false);
         int layerIndex = playerAnimatorHandler.animator.GetLayerIndex("Aim");
         StartCoroutine(StopAiming(layerIndex, aimSpeed));
+        playerContext.Set<bool>(ContextStateKey.IsAiming, isAiming);
+
     }
     public void OnSwitchShoulders()
     {
