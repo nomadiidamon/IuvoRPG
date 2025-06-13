@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Endurance : Stat
 {
     [SerializeField] Agility myAgility;
@@ -15,14 +17,4 @@ public class Endurance : Stat
     [SerializeField] float maxLungCapacity = 1.0f;
 
 
-    void Start()
-    {
-        
-    }
-
-
-    void Update()
-    {
-        
-    }
 }

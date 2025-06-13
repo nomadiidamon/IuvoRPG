@@ -1,9 +1,12 @@
+using IuvoUnity._DataStructs;
 using System;
+using UnityEngine.Bindings;
 using UnityEngine;
 
 [Serializable]
 public class Health : Stat, IRecharge
 {
+    [Header("Health")]
     [SerializeField] private int currentHealth = 35;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int maxRechargeValue = 75;
@@ -18,14 +21,16 @@ public class Health : Stat, IRecharge
 
     public float currentTime = 0.0f;
 
-    public FlexibleEvent OnTakeDamage;
+    public FlexibleEvent OnTakeDamage = new FlexibleEvent();
 
-    public void Start()
+    public override void OnStart()
     {
-        OnTakeDamage = new FlexibleEvent();
+        updateMode = UpdateMode.Regular;
+        PriorityLevel = PriorityLevel.High;
+        priorityScale = new ClampedFloat(new RangeF(0.0f, 1.0f), 1.0f);
     }
 
-    public void Update()
+    public override void OnUpdate()
     {
         Recharge();
     }
@@ -52,7 +57,7 @@ public class Health : Stat, IRecharge
     public void Heal(int healAmount) => currentHealth = Mathf.Clamp(currentHealth + healAmount, 0, maxHealth);
     public void TakeDamage(int damageAmount)
     {
-        StartCoroutine(LerpStatValue(currentHealth, currentHealth - damageAmount, 0, maxHealth, statLerpSpeed));
+        Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
         OnTakeDamage.Invoke();
     }
 

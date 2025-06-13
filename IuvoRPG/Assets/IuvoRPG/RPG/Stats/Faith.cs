@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Faith : Stat
 {
-
     Luck myLuck;
 
     [Header("Character's Karmic nature")]
@@ -21,17 +22,6 @@ public class Faith : Stat
     [Header("Faith Based Bonuses")]
     [SerializeField] private float faithSpellMult = 0.35f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     #region Stat Utility Functions
     public int GetFaithSpellDamageAmount(int damageAmount) => (int)(faithSpellMult * damageAmount);

@@ -1,7 +1,11 @@
+using IuvoUnity._DataStructs;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Stamina : Stat
 {
+    [Header("Stamina")]
     [SerializeField] private int currentStamina = 35;
     [SerializeField] private int maxStamina = 100;
     [SerializeField] private int maxRechargeValue = 75;
@@ -15,7 +19,15 @@ public class Stamina : Stat
 
     public float currentTime = 0.0f;
 
-    public void Update()
+    public override void OnStart()
+    {
+        updateMode = UpdateMode.Regular;
+        PriorityLevel = PriorityLevel.High;
+        priorityScale.Range = new RangeF(0.0f, 1.0f);
+        priorityScale.Value = 0.90f;
+    }
+
+    public override void OnUpdate()
     {
         Recharge();
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: Transition class from Monobehaviour to POCO
@@ -5,8 +6,7 @@ public class PlayerStatHandler : MonoBehaviour, IPlayerHandler
 {
     [SerializeField] public Context playerContext { get; set; }
 
-
-    [Header("Player Level & Experience")]
+    [Header("Player Progression")]
     [SerializeField] private Level playerLevel;
 
     [Header("Player Core Stats")]
@@ -29,16 +29,119 @@ public class PlayerStatHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] public Wisdom playerWisdom;    // effects mana level, magic duration, and improves perception
 
 
+    private readonly List<SemiBehavior> regularUpdateBehaviors = new List<SemiBehavior>();
+    private readonly List<SemiBehavior> fixedUpdateBehaviors = new List<SemiBehavior>();
+    private readonly List<SemiBehavior> lateUpdateBehaviors = new List<SemiBehavior>();
 
 
     public void Start()
     {
-
+        Register(playerLevel);
+        Register(playerHealth);
+        Register(playerStamina);
+        Register(playerMana);
+        Register(playerStrength);
+        Register(playerDexterity);
+        Register(playerAgility);
+        Register(playerEndurance);
+        Register(playerLuck);
+        Register(playerFaith);
+        Register(playerIntelligence);
+        Register(playerWisdom);
     }
 
-    public void Update()
+    public void Register(SemiBehavior behavior)
     {
+        if (behavior == null) return;
+        if (regularUpdateBehaviors.Contains(behavior) ||
+            fixedUpdateBehaviors.Contains(behavior) ||
+            lateUpdateBehaviors.Contains(behavior)) return;
 
+        behavior.TryInitializeLifecycle();
+
+        switch (behavior.updateMode)
+        {
+            case SemiBehavior.UpdateMode.Regular:
+                regularUpdateBehaviors.Add(behavior);
+                SortListByPriority(regularUpdateBehaviors);
+                break;
+            case SemiBehavior.UpdateMode.Fixed:
+                fixedUpdateBehaviors.Add(behavior);
+                SortListByPriority(fixedUpdateBehaviors);
+                break;
+            case SemiBehavior.UpdateMode.Late:
+                lateUpdateBehaviors.Add(behavior);
+                SortListByPriority(lateUpdateBehaviors);
+                break;
+        }
+    }
+
+    private void SortListByPriority(List<SemiBehavior> list)
+    {
+        list.Sort((a, b) =>
+        {
+            int levelComparison = b.PriorityLevel.CompareTo(a.PriorityLevel); // descending
+            if (levelComparison != 0)
+                return levelComparison;
+
+            return b.priorityScale.Value.CompareTo(a.priorityScale.Value); // descending
+        });
+    }
+
+    public void RefreshPriorities()
+    {
+        SortListByPriority(regularUpdateBehaviors);
+        SortListByPriority(fixedUpdateBehaviors);
+        SortListByPriority(lateUpdateBehaviors);
+    }
+
+    public void Unregister(SemiBehavior behavior)
+    {
+        if (behavior == null) return;
+
+        behavior.DeinitializeLifecycle();
+
+        regularUpdateBehaviors.Remove(behavior);
+        fixedUpdateBehaviors.Remove(behavior);
+        lateUpdateBehaviors.Remove(behavior);
+    }
+
+    private void Update()
+    {
+        foreach (var behavior in regularUpdateBehaviors)
+        {
+            if (behavior != null && behavior.isInitialized)
+                behavior.Tick();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        foreach (var behavior in fixedUpdateBehaviors)
+        {
+            if (behavior != null && behavior.isInitialized)
+                behavior.Tick();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        foreach (var behavior in lateUpdateBehaviors)
+        {
+            if (behavior != null && behavior.isInitialized)
+                behavior.Tick();
+        }
+    }
+
+    public void ClearAll()
+    {
+        foreach (var behavior in regularUpdateBehaviors) behavior.DeinitializeLifecycle();
+        foreach (var behavior in fixedUpdateBehaviors) behavior.DeinitializeLifecycle();
+        foreach (var behavior in lateUpdateBehaviors) behavior.DeinitializeLifecycle();
+
+        regularUpdateBehaviors.Clear();
+        fixedUpdateBehaviors.Clear();
+        lateUpdateBehaviors.Clear();
     }
 
     #region Getters & Setters

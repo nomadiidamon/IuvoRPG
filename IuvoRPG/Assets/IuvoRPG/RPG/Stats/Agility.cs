@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Agility : Stat
 {
     [SerializeField] Endurance myEndurance;
@@ -16,14 +18,6 @@ public class Agility : Stat
 
     [SerializeField] Vector3 gravityDirection = Vector3.down;
 
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-        
-    }
 
     #region Getters & Setters
         

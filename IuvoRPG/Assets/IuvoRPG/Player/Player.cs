@@ -89,8 +89,8 @@ public class Player : MonoBehaviour
         // did the player request any UI functions, if so invoke, else check for HUD updates
         UpdateUI();
 
-        // if any stats have changes to make, make them and report them to the UI
-        UpdateStats();
+        //// if any stats have changes to make, make them and report them to the UI
+        //UpdateStats();
         
     }
 
@@ -112,10 +112,10 @@ public class Player : MonoBehaviour
 
 
 
-    private void UpdateStats()
-    {
-        playerStatHandler.Update();
-    }
+    //private void UpdateStats()
+    //{
+    //    playerStatHandler.Update();
+    //}
 
     private void UpdateUI()
     {

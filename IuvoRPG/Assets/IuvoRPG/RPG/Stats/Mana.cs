@@ -1,5 +1,8 @@
+using IuvoUnity._DataStructs;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Mana : Stat
 {
     [SerializeField] private int currentMana = 35;
@@ -15,7 +18,15 @@ public class Mana : Stat
 
     public float currentTime = 0.0f;
 
-    public void Update()
+    public override void OnStart()
+    {
+        updateMode = UpdateMode.Regular;
+        PriorityLevel = PriorityLevel.High;
+        priorityScale.Range = new RangeF(0.0f, 1.0f);
+        priorityScale.Value = 0.80f;
+    }
+
+    public override void OnUpdate()
     {
         Recharge();
     }

@@ -58,4 +58,9 @@ public class Waypoint : SemiBehavior
         }
     }
 
+    public Waypoint Clone()
+    {
+        return new Waypoint(this._position);
+    }
+
 }

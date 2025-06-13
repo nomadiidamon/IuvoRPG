@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class Level : Stat
 {
+    [Header("Level 'EXP'")]
     [SerializeField] private int currentExperience = 0;
     [SerializeField] private int expToNextLevel = 50;
     [SerializeField] private float levelRate = 0.5f;

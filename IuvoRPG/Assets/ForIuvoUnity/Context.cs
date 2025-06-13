@@ -1,5 +1,6 @@
 using IuvoUnity._BaseClasses;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -84,12 +85,14 @@ public static class ContextKeyGroups
     }
 }
 
+
+
 [Serializable]
 public class Context : IDataStructBase
 {
-    private Dictionary<Enum, object> _data = new Dictionary<Enum, object>();
+    private ConcurrentDictionary<Enum, object> _data = new ConcurrentDictionary<Enum, object>();
 
-    private Dictionary<Enum, object> _eventMap = new Dictionary<Enum, object>();
+    private ConcurrentDictionary<Enum, object> _eventMap = new ConcurrentDictionary<Enum, object>();
 
 
     public Context()
@@ -97,9 +100,9 @@ public class Context : IDataStructBase
 
     }
 
-    public Context(ref Dictionary<Enum, object> contextDictionary)
+    public Context(ref ConcurrentDictionary<Enum, object> contextDictionary)
     {
-        _data = new Dictionary<Enum, object>(contextDictionary);
+        _data = new ConcurrentDictionary<Enum, object>(contextDictionary);
     }
 
     // context data functions
@@ -144,13 +147,13 @@ public class Context : IDataStructBase
     }
 
     public bool Has(Enum key) => _data.ContainsKey(key);
-    public bool Remove(Enum key) => _data.Remove(key);
+    public bool Remove(Enum key) => _data.TryRemove(key, out _);
     public void Clear() => _data.Clear();
 
     // Context helpers
     public Context CloneContext()
     {
-        var newDict = new Dictionary<Enum, object>(_data);
+        var newDict = new ConcurrentDictionary<Enum, object>(_data);
         return new Context(ref newDict);
     }
 
@@ -220,6 +223,6 @@ public class Context : IDataStructBase
     }
 
     public bool HasEvent(Enum key) => _eventMap.ContainsKey(key);
-    public bool RemoveEvent(Enum key) => _eventMap.Remove(key);
+    public bool RemoveEvent(Enum key) => _eventMap.TryRemove(key, out _);
     public void ClearEvents() => _eventMap.Clear();
 }

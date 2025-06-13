@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Luck : Stat
 {
 
@@ -12,23 +14,12 @@ public class Luck : Stat
     [SerializeField] private float avoidDamageChance = 0.05f;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     #region Stat Utility Functions
-    public bool DidDiscoverItem() => (Random.Range(0, 1) <= itemDiscovery);
-    public bool DidCritHit() => (Random.Range(0, 1) <= critHitChance);
+    public bool DidDiscoverItem() => (UnityEngine.Random.Range(0, 1) <= itemDiscovery);
+    public bool DidCritHit() => (UnityEngine.Random.Range(0, 1) <= critHitChance);
     public int GetCritDamageAmount(int damageAmount) => (int)(damageAmount * critHitDamageMultiplier);
-    public bool DidAvoidDamage() => (Random.Range(0, 1) <= avoidDamageChance);
+    public bool DidAvoidDamage() => (UnityEngine.Random.Range(0, 1) <= avoidDamageChance);
     #endregion
 
 

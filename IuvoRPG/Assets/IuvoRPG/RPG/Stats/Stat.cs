@@ -5,12 +5,19 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class Stat : MonoBehaviour
+public class Stat : SemiBehavior
 {
+    [Header("Stat")]
     [SerializeField] private string _statName;
     [SerializeField] private int _levelValue;
     [SerializeField] private float statLevelRate = 0.2f;
 
+    public Stat()
+    {
+        _statName = string.Empty;
+        _levelValue = 0;
+
+    }
 
     public IEnumerator LerpStatValue(int currentStatValue, int newStatValue, int minStatValue, int maxStatValue, float statLerpSpeed)
     {

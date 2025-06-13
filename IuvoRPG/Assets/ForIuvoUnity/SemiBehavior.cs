@@ -1,6 +1,8 @@
 using IuvoUnity._BaseClasses;
 using IuvoUnity._DataStructs;
 using IuvoUnity._Interfaces;
+using System;
+using UnityEngine;
 
 
 /// <summary>
@@ -10,8 +12,9 @@ using IuvoUnity._Interfaces;
 public abstract class SemiBehavior : IDataStructBase, IAwake, IStart, IUpdate, IFixedUpdate, ILateUpdate, ITogglable, IPriority
 {
     // custom event class that works with c# delegates and Unity events
-    protected FlexibleEvent UpdateLoop = new FlexibleEvent();
+    protected FlexibleEvent UpdateLoop;
 
+    [Header("SemiBehavior")]
     public bool isInitialized = false;
 
     public bool autoStart = true;
@@ -19,6 +22,9 @@ public abstract class SemiBehavior : IDataStructBase, IAwake, IStart, IUpdate, I
     public bool autoActivate = true;
 
     #region Base SemiBehavior Functions
+
+    public SemiBehavior() { UpdateLoop = new FlexibleEvent();  }
+
     public virtual void TryInitializeLifecycle()
     {
         if (isInitialized) return;
@@ -166,10 +172,11 @@ public abstract class SemiBehavior : IDataStructBase, IAwake, IStart, IUpdate, I
         Late
     }
 
+    [SerializeField]private UpdateMode _updateMode = UpdateMode.Regular;
     /// <summary>
     /// Determines which update loop (Update, FixedUpdate, LateUpdate) is used.
     /// </summary>
-    public UpdateMode updateMode { get; set; } = UpdateMode.Regular;
+    public UpdateMode updateMode { get => _updateMode; set => _updateMode = value; }
 
     /// <summary>
     /// Override to define logic executed during the standard Update loop.
