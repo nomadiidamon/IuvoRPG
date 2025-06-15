@@ -1,7 +1,6 @@
 using IuvoUnity._BaseClasses;
 using IuvoUnity._DataStructs;
 using IuvoUnity._Interfaces;
-using System;
 using UnityEngine;
 
 
@@ -20,6 +19,8 @@ public abstract class SemiBehavior : IDataStructBase, IAwake, IStart, IUpdate, I
     public bool autoStart = true;
     public bool autoEnable = true;
     public bool autoActivate = true;
+
+    public SemiBehaviorManager parentManager;
 
     #region Base SemiBehavior Functions
 

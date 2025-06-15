@@ -8,9 +8,9 @@ using UnityEngine;
 public class Stat : SemiBehavior
 {
     [Header("Stat")]
-    [SerializeField] private string _statName;
-    [SerializeField] private int _levelValue;
-    [SerializeField] private float statLevelRate = 0.2f;
+    [SerializeField] protected string _statName;
+    [SerializeField] protected int _levelValue;
+    [SerializeField] protected float statLevelRate = 0.2f;
 
     public Stat()
     {

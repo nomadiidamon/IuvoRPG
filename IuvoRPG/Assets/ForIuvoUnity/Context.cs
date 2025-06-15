@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ContextActorKey { Player, Target, Enemy, Camera, Interactable }
+public enum ContextActorKey { Player, Target, Ally, Enemy, Camera, Interactable }
 public enum ContextStateKey { IsUnderAttack, IsVisible, IsMoving, IsGrounded, IsAiming, IsDead, IsPaused }
-public enum ContextStatKey { Health, MaxHealth, Mana, MaxMana, Stamina, MaxStamina, Experience, ExpToNextLevel, Score, DistanceToTarget, TimeSinceLastSeen, cooldownTime }
+public enum ContextStatKey { PlayerStats, CharcterStats, Score, DistanceToTarget, TimeSinceLastSeen, CooldownTime }
 public enum ContextTransformKey { Transform, Position, Destination, Velocity, Direction, LookTarget }
-public enum ContextEventKey { OnDamageTaken, OnDeath, OnItemPickup, OnObjectiveComplete, OnInteract }
+public enum ContextEventKey { OnDamageTaken, OnDeath, OnItemPickup, OnObjectiveComplete, OnInteract, OnPause }
 public enum ContextSystemKey { InputData, Inventory, DialogueState, QuestStatus, AudioCue }
 public enum ContextCustomKey { Custom0, Custom1, Custom2 }
 

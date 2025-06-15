@@ -3,22 +3,13 @@ using UnityEngine;
 
 public class SemiBehaviorManager : MonoBehaviour
 {
-    public static SemiBehaviorManager Instance { get; private set; }
-
-    private readonly List<SemiBehavior> regularUpdateBehaviors = new();
-    private readonly List<SemiBehavior> fixedUpdateBehaviors = new();
-    private readonly List<SemiBehavior> lateUpdateBehaviors = new();
+    protected readonly List<SemiBehavior> regularUpdateBehaviors = new();
+    protected readonly List<SemiBehavior> fixedUpdateBehaviors = new();
+    protected readonly List<SemiBehavior> lateUpdateBehaviors = new();
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void Register(SemiBehavior behavior)
@@ -27,6 +18,8 @@ public class SemiBehaviorManager : MonoBehaviour
         if (regularUpdateBehaviors.Contains(behavior) ||
             fixedUpdateBehaviors.Contains(behavior) ||
             lateUpdateBehaviors.Contains(behavior)) return;
+
+        behavior.parentManager = this;
 
         behavior.TryInitializeLifecycle();
 

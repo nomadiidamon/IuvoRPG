@@ -13,7 +13,11 @@ public class Luck : Stat
 
     [SerializeField] private float avoidDamageChance = 0.05f;
 
-
+    public override void OnStart()
+    {
+        _levelValue = 1;
+        _statName = "Luck";
+    }
 
     #region Stat Utility Functions
     public bool DidDiscoverItem() => (UnityEngine.Random.Range(0, 1) <= itemDiscovery);

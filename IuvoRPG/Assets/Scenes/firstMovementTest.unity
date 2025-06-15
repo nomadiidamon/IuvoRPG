@@ -511,6 +511,7 @@ MonoBehaviour:
     autoStart: 1
     autoEnable: 1
     autoActivate: 1
+    parentManager: {fileID: 0}
     _updateMode: 1
     _statName: 
     _levelValue: 0
@@ -520,6 +521,7 @@ MonoBehaviour:
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
       _statName: 
       _levelValue: 0
@@ -529,6 +531,7 @@ MonoBehaviour:
         autoStart: 1
         autoEnable: 1
         autoActivate: 1
+        parentManager: {fileID: 0}
         _updateMode: 1
         _statName: 
         _levelValue: 0
@@ -538,6 +541,7 @@ MonoBehaviour:
           autoStart: 1
           autoEnable: 1
           autoActivate: 1
+          parentManager: {fileID: 0}
           _updateMode: 1
           _statName: 
           _levelValue: 0
@@ -547,6 +551,7 @@ MonoBehaviour:
             autoStart: 1
             autoEnable: 1
             autoActivate: 1
+            parentManager: {fileID: 0}
             _updateMode: 1
             _statName: 
             _levelValue: 0
@@ -556,6 +561,7 @@ MonoBehaviour:
               autoStart: 1
               autoEnable: 1
               autoActivate: 1
+              parentManager: {fileID: 0}
               _updateMode: 1
               _statName: 
               _levelValue: 0
@@ -565,6 +571,7 @@ MonoBehaviour:
                 autoStart: 1
                 autoEnable: 1
                 autoActivate: 1
+                parentManager: {fileID: 0}
                 _updateMode: 1
                 _statName: 
                 _levelValue: 0
@@ -574,6 +581,7 @@ MonoBehaviour:
                   autoStart: 1
                   autoEnable: 1
                   autoActivate: 1
+                  parentManager: {fileID: 0}
                   _updateMode: 1
                   _statName: 
                   _levelValue: 0
@@ -583,6 +591,7 @@ MonoBehaviour:
                     autoStart: 1
                     autoEnable: 1
                     autoActivate: 1
+                    parentManager: {fileID: 0}
                     _updateMode: 1
                     _statName: 
                     _levelValue: 0
@@ -592,6 +601,7 @@ MonoBehaviour:
                       autoStart: 1
                       autoEnable: 1
                       autoActivate: 1
+                      parentManager: {fileID: 0}
                       _updateMode: 1
                       _statName: 
                       _levelValue: 0
@@ -4273,190 +4283,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df51488abfe432418ee7574be6fb44a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLevel:
+  playerStats:
     isInitialized: 0
     autoStart: 1
     autoEnable: 1
     autoActivate: 1
+    parentManager: {fileID: 0}
     _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    currentExperience: 0
-    expToNextLevel: 50
-    levelRate: 0.5
-  playerHealth:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    currentHealth: 7
-    maxHealth: 100
-    maxRechargeValue: 86
-    statLerpSpeed: 0.43
-    rechargeAmount: 1.12
-    rechargeSpeed: 0.73
-    currentTime: 0
-    OnTakeDamage:
-      unityEvent:
-        m_PersistentCalls:
-          m_Calls: []
-  playerStamina:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    currentStamina: 16
-    maxStamina: 100
-    maxRechargeValue: 100
-    rechargeAmount: 3.6
-    rechargeSpeed: 0.25
-    currentTime: 0
-  playerMana:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    currentMana: 35
-    maxMana: 100
-    maxRechargeValue: 75
-    rechargeAmount: 5
-    rechargeSpeed: 0.25
-    currentTime: 0
-  playerStrength:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    myDexterity:
+    logStatsNow: 0
+    myLevel:
       isInitialized: 0
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
-      _statName: 
-      _levelValue: 0
+      _statName: Level
+      _levelValue: 3
       statLevelRate: 0.2
-      myStrength:
-        isInitialized: 0
-        autoStart: 1
-        autoEnable: 1
-        autoActivate: 1
-        _updateMode: 1
-        _statName: 
-        _levelValue: 0
-        statLevelRate: 0.2
-        myDexterity:
-          isInitialized: 0
-          autoStart: 1
-          autoEnable: 1
-          autoActivate: 1
-          _updateMode: 1
-          _statName: 
-          _levelValue: 0
-          statLevelRate: 0.2
-          myStrength:
-            isInitialized: 0
-            autoStart: 1
-            autoEnable: 1
-            autoActivate: 1
-            _updateMode: 1
-            _statName: 
-            _levelValue: 0
-            statLevelRate: 0.2
-            myDexterity:
-              isInitialized: 0
-              autoStart: 1
-              autoEnable: 1
-              autoActivate: 1
-              _updateMode: 1
-              _statName: 
-              _levelValue: 0
-              statLevelRate: 0.2
-              myStrength:
-                isInitialized: 0
-                autoStart: 1
-                autoEnable: 1
-                autoActivate: 1
-                _updateMode: 1
-                _statName: 
-                _levelValue: 0
-                statLevelRate: 0.2
-                myDexterity:
-                  isInitialized: 0
-                  autoStart: 1
-                  autoEnable: 1
-                  autoActivate: 1
-                  _updateMode: 1
-                  _statName: 
-                  _levelValue: 0
-                  statLevelRate: 0.2
-                  myStrength:
-                    isInitialized: 0
-                    autoStart: 1
-                    autoEnable: 1
-                    autoActivate: 1
-                    _updateMode: 1
-                    _statName: 
-                    _levelValue: 0
-                    statLevelRate: 0.2
-                    myDexterity:
-                      isInitialized: 0
-                      autoStart: 1
-                      autoEnable: 1
-                      autoActivate: 1
-                      _updateMode: 1
-                      _statName: 
-                      _levelValue: 0
-                      statLevelRate: 0.2
-                      myStrength:
-                        isInitialized: 0
-                        autoStart: 1
-                        autoEnable: 1
-                        autoActivate: 1
-                        _updateMode: 1
-                        _statName: 
-                        _levelValue: 0
-                        statLevelRate: 0.2
-  playerDexterity:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
+      currentExperience: 0
+      expToNextLevel: 50
+      levelRate: 0.5
+    myHealth:
+      isInitialized: 0
+      autoStart: 1
+      autoEnable: 1
+      autoActivate: 1
+      parentManager: {fileID: 0}
+      _updateMode: 1
+      _statName: Health
+      _levelValue: 1
+      statLevelRate: 0.2
+      currentHealth: 35
+      maxHealth: 100
+      maxRechargeValue: 75
+      statLerpSpeed: 0.43
+      rechargeAmount: 2
+      rechargeSpeed: 1.5
+      currentTime: 0
+      OnTakeDamage:
+        unityEvent:
+          m_PersistentCalls:
+            m_Calls: []
+    myStamina:
+      isInitialized: 0
+      autoStart: 1
+      autoEnable: 1
+      autoActivate: 1
+      parentManager: {fileID: 0}
+      _updateMode: 1
+      _statName: Stamina
+      _levelValue: 1
+      statLevelRate: 0.2
+      currentStamina: 0
+      maxStamina: 100
+      maxRechargeValue: 100
+      rechargeAmount: 3
+      rechargeSpeed: 0.25
+      currentTime: 0
+    myMana:
+      isInitialized: 0
+      autoStart: 1
+      autoEnable: 1
+      autoActivate: 1
+      parentManager: {fileID: 0}
+      _updateMode: 1
+      _statName: Mana
+      _levelValue: 1
+      statLevelRate: 0.2
+      currentMana: 0
+      maxMana: 100
+      maxRechargeValue: 75
+      rechargeAmount: 2
+      rechargeSpeed: 2.75
+      currentTime: 0
     myStrength:
       isInitialized: 0
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
-      _statName: 
-      _levelValue: 0
+      _statName: Strength
+      _levelValue: 1
       statLevelRate: 0.2
       myDexterity:
         isInitialized: 0
         autoStart: 1
         autoEnable: 1
         autoActivate: 1
+        parentManager: {fileID: 0}
         _updateMode: 1
         _statName: 
         _levelValue: 0
@@ -4466,6 +4382,7 @@ MonoBehaviour:
           autoStart: 1
           autoEnable: 1
           autoActivate: 1
+          parentManager: {fileID: 0}
           _updateMode: 1
           _statName: 
           _levelValue: 0
@@ -4475,6 +4392,7 @@ MonoBehaviour:
             autoStart: 1
             autoEnable: 1
             autoActivate: 1
+            parentManager: {fileID: 0}
             _updateMode: 1
             _statName: 
             _levelValue: 0
@@ -4484,6 +4402,7 @@ MonoBehaviour:
               autoStart: 1
               autoEnable: 1
               autoActivate: 1
+              parentManager: {fileID: 0}
               _updateMode: 1
               _statName: 
               _levelValue: 0
@@ -4493,6 +4412,7 @@ MonoBehaviour:
                 autoStart: 1
                 autoEnable: 1
                 autoActivate: 1
+                parentManager: {fileID: 0}
                 _updateMode: 1
                 _statName: 
                 _levelValue: 0
@@ -4502,6 +4422,7 @@ MonoBehaviour:
                   autoStart: 1
                   autoEnable: 1
                   autoActivate: 1
+                  parentManager: {fileID: 0}
                   _updateMode: 1
                   _statName: 
                   _levelValue: 0
@@ -4511,6 +4432,7 @@ MonoBehaviour:
                     autoStart: 1
                     autoEnable: 1
                     autoActivate: 1
+                    parentManager: {fileID: 0}
                     _updateMode: 1
                     _statName: 
                     _levelValue: 0
@@ -4520,6 +4442,7 @@ MonoBehaviour:
                       autoStart: 1
                       autoEnable: 1
                       autoActivate: 1
+                      parentManager: {fileID: 0}
                       _updateMode: 1
                       _statName: 
                       _levelValue: 0
@@ -4533,97 +4456,97 @@ MonoBehaviour:
                         _statName: 
                         _levelValue: 0
                         statLevelRate: 0.2
-  playerAgility:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    myEndurance:
+    myDexterity:
       isInitialized: 0
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
-      _statName: 
-      _levelValue: 0
+      _statName: Dexterity
+      _levelValue: 1
       statLevelRate: 0.2
-      myAgility:
+      myStrength:
         isInitialized: 0
         autoStart: 1
         autoEnable: 1
         autoActivate: 1
+        parentManager: {fileID: 0}
         _updateMode: 1
         _statName: 
         _levelValue: 0
         statLevelRate: 0.2
-        myEndurance:
+        myDexterity:
           isInitialized: 0
           autoStart: 1
           autoEnable: 1
           autoActivate: 1
+          parentManager: {fileID: 0}
           _updateMode: 1
           _statName: 
           _levelValue: 0
           statLevelRate: 0.2
-          myAgility:
+          myStrength:
             isInitialized: 0
             autoStart: 1
             autoEnable: 1
             autoActivate: 1
+            parentManager: {fileID: 0}
             _updateMode: 1
             _statName: 
             _levelValue: 0
             statLevelRate: 0.2
-            myEndurance:
+            myDexterity:
               isInitialized: 0
               autoStart: 1
               autoEnable: 1
               autoActivate: 1
+              parentManager: {fileID: 0}
               _updateMode: 1
               _statName: 
               _levelValue: 0
               statLevelRate: 0.2
-              myAgility:
+              myStrength:
                 isInitialized: 0
                 autoStart: 1
                 autoEnable: 1
                 autoActivate: 1
+                parentManager: {fileID: 0}
                 _updateMode: 1
                 _statName: 
                 _levelValue: 0
                 statLevelRate: 0.2
-                myEndurance:
+                myDexterity:
                   isInitialized: 0
                   autoStart: 1
                   autoEnable: 1
                   autoActivate: 1
+                  parentManager: {fileID: 0}
                   _updateMode: 1
                   _statName: 
                   _levelValue: 0
                   statLevelRate: 0.2
-                  myAgility:
+                  myStrength:
                     isInitialized: 0
                     autoStart: 1
                     autoEnable: 1
                     autoActivate: 1
+                    parentManager: {fileID: 0}
                     _updateMode: 1
                     _statName: 
                     _levelValue: 0
                     statLevelRate: 0.2
-                    myEndurance:
+                    myDexterity:
                       isInitialized: 0
                       autoStart: 1
                       autoEnable: 1
                       autoActivate: 1
+                      parentManager: {fileID: 0}
                       _updateMode: 1
                       _statName: 
                       _levelValue: 0
                       statLevelRate: 0.2
-                      myAgility:
+                      myStrength:
                         isInitialized: 0
                         autoStart: 1
                         autoEnable: 1
@@ -4632,101 +4555,22 @@ MonoBehaviour:
                         _statName: 
                         _levelValue: 0
                         statLevelRate: 0.2
-                        moveSpeed: 5
-                        sprintMultiplier: 10
-                        dodgeSpeed: 15
-                        dodgeDuration: 0.75
-                        jumpForce: 2.5
-                        climbSpeed: 3
-                        gravityDirection: {x: 0, y: -1, z: 0}
-                      currentCarryWeight: 0
-                      maxCarryWeight: 100
-                      frostResistance: 0.25
-                      maxFrostResitance: 0.75
-                      lungCapacity: 0.35
-                      maxLungCapacity: 1
-                    moveSpeed: 5
-                    sprintMultiplier: 10
-                    dodgeSpeed: 15
-                    dodgeDuration: 0.75
-                    jumpForce: 2.5
-                    climbSpeed: 3
-                    gravityDirection: {x: 0, y: -1, z: 0}
-                  currentCarryWeight: 0
-                  maxCarryWeight: 100
-                  frostResistance: 0.25
-                  maxFrostResitance: 0.75
-                  lungCapacity: 0.35
-                  maxLungCapacity: 1
-                moveSpeed: 5
-                sprintMultiplier: 10
-                dodgeSpeed: 15
-                dodgeDuration: 0.75
-                jumpForce: 2.5
-                climbSpeed: 3
-                gravityDirection: {x: 0, y: -1, z: 0}
-              currentCarryWeight: 0
-              maxCarryWeight: 100
-              frostResistance: 0.25
-              maxFrostResitance: 0.75
-              lungCapacity: 0.35
-              maxLungCapacity: 1
-            moveSpeed: 5
-            sprintMultiplier: 10
-            dodgeSpeed: 15
-            dodgeDuration: 0.75
-            jumpForce: 2.5
-            climbSpeed: 3
-            gravityDirection: {x: 0, y: -1, z: 0}
-          currentCarryWeight: 0
-          maxCarryWeight: 100
-          frostResistance: 0.25
-          maxFrostResitance: 0.75
-          lungCapacity: 0.35
-          maxLungCapacity: 1
-        moveSpeed: 5
-        sprintMultiplier: 10
-        dodgeSpeed: 15
-        dodgeDuration: 0.75
-        jumpForce: 2.5
-        climbSpeed: 3
-        gravityDirection: {x: 0, y: -1, z: 0}
-      currentCarryWeight: 0
-      maxCarryWeight: 100
-      frostResistance: 0.25
-      maxFrostResitance: 0.75
-      lungCapacity: 0.35
-      maxLungCapacity: 1
-    moveSpeed: 5
-    sprintMultiplier: 10
-    dodgeSpeed: 15
-    dodgeDuration: 0.75
-    jumpForce: 2.5
-    climbSpeed: 3
-    gravityDirection: {x: 0, y: -1, z: 0}
-  playerEndurance:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
     myAgility:
       isInitialized: 0
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
-      _statName: 
-      _levelValue: 0
+      _statName: Agility
+      _levelValue: 1
       statLevelRate: 0.2
       myEndurance:
         isInitialized: 0
         autoStart: 1
         autoEnable: 1
         autoActivate: 1
+        parentManager: {fileID: 0}
         _updateMode: 1
         _statName: 
         _levelValue: 0
@@ -4736,6 +4580,7 @@ MonoBehaviour:
           autoStart: 1
           autoEnable: 1
           autoActivate: 1
+          parentManager: {fileID: 0}
           _updateMode: 1
           _statName: 
           _levelValue: 0
@@ -4745,6 +4590,7 @@ MonoBehaviour:
             autoStart: 1
             autoEnable: 1
             autoActivate: 1
+            parentManager: {fileID: 0}
             _updateMode: 1
             _statName: 
             _levelValue: 0
@@ -4754,6 +4600,7 @@ MonoBehaviour:
               autoStart: 1
               autoEnable: 1
               autoActivate: 1
+              parentManager: {fileID: 0}
               _updateMode: 1
               _statName: 
               _levelValue: 0
@@ -4763,6 +4610,7 @@ MonoBehaviour:
                 autoStart: 1
                 autoEnable: 1
                 autoActivate: 1
+                parentManager: {fileID: 0}
                 _updateMode: 1
                 _statName: 
                 _levelValue: 0
@@ -4772,6 +4620,7 @@ MonoBehaviour:
                   autoStart: 1
                   autoEnable: 1
                   autoActivate: 1
+                  parentManager: {fileID: 0}
                   _updateMode: 1
                   _statName: 
                   _levelValue: 0
@@ -4781,6 +4630,7 @@ MonoBehaviour:
                     autoStart: 1
                     autoEnable: 1
                     autoActivate: 1
+                    parentManager: {fileID: 0}
                     _updateMode: 1
                     _statName: 
                     _levelValue: 0
@@ -4790,6 +4640,7 @@ MonoBehaviour:
                       autoStart: 1
                       autoEnable: 1
                       autoActivate: 1
+                      parentManager: {fileID: 0}
                       _updateMode: 1
                       _statName: 
                       _levelValue: 0
@@ -4868,131 +4719,97 @@ MonoBehaviour:
       jumpForce: 2.5
       climbSpeed: 3
       gravityDirection: {x: 0, y: -1, z: 0}
-    currentCarryWeight: 0
-    maxCarryWeight: 100
-    frostResistance: 0.25
-    maxFrostResitance: 0.75
-    lungCapacity: 0.35
-    maxLungCapacity: 1
-  playerLuck:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    itemDiscovery: 0.35
-    critHitChance: 0.15
-    critHitDamageMultiplier: 1.65
-    avoidDamageChance: 0.05
-  playerFaith:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    karma: 0.5
-    poisonResistance: 0.15
-    maxPosionResistance: 0.95
-    fireResistance: 0.15
-    maxFireResistance: 1
-    faithSpellMult: 0.35
-  playerIntelligence:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    myWisdom:
+    myEndurance:
       isInitialized: 0
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
-      _statName: 
-      _levelValue: 0
+      _statName: Endurance
+      _levelValue: 1
       statLevelRate: 0.2
-      myIntelligence:
+      myAgility:
         isInitialized: 0
         autoStart: 1
         autoEnable: 1
         autoActivate: 1
+        parentManager: {fileID: 0}
         _updateMode: 1
         _statName: 
         _levelValue: 0
         statLevelRate: 0.2
-        myWisdom:
+        myEndurance:
           isInitialized: 0
           autoStart: 1
           autoEnable: 1
           autoActivate: 1
+          parentManager: {fileID: 0}
           _updateMode: 1
           _statName: 
           _levelValue: 0
           statLevelRate: 0.2
-          myIntelligence:
+          myAgility:
             isInitialized: 0
             autoStart: 1
             autoEnable: 1
             autoActivate: 1
+            parentManager: {fileID: 0}
             _updateMode: 1
             _statName: 
             _levelValue: 0
             statLevelRate: 0.2
-            myWisdom:
+            myEndurance:
               isInitialized: 0
               autoStart: 1
               autoEnable: 1
               autoActivate: 1
+              parentManager: {fileID: 0}
               _updateMode: 1
               _statName: 
               _levelValue: 0
               statLevelRate: 0.2
-              myIntelligence:
+              myAgility:
                 isInitialized: 0
                 autoStart: 1
                 autoEnable: 1
                 autoActivate: 1
+                parentManager: {fileID: 0}
                 _updateMode: 1
                 _statName: 
                 _levelValue: 0
                 statLevelRate: 0.2
-                myWisdom:
+                myEndurance:
                   isInitialized: 0
                   autoStart: 1
                   autoEnable: 1
                   autoActivate: 1
+                  parentManager: {fileID: 0}
                   _updateMode: 1
                   _statName: 
                   _levelValue: 0
                   statLevelRate: 0.2
-                  myIntelligence:
+                  myAgility:
                     isInitialized: 0
                     autoStart: 1
                     autoEnable: 1
                     autoActivate: 1
+                    parentManager: {fileID: 0}
                     _updateMode: 1
                     _statName: 
                     _levelValue: 0
                     statLevelRate: 0.2
-                    myWisdom:
+                    myEndurance:
                       isInitialized: 0
                       autoStart: 1
                       autoEnable: 1
                       autoActivate: 1
+                      parentManager: {fileID: 0}
                       _updateMode: 1
                       _statName: 
                       _levelValue: 0
                       statLevelRate: 0.2
-                      myIntelligence:
+                      myAgility:
                         isInitialized: 0
                         autoStart: 1
                         autoEnable: 1
@@ -5001,29 +4818,117 @@ MonoBehaviour:
                         _statName: 
                         _levelValue: 0
                         statLevelRate: 0.2
-  playerWisdom:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
+                        moveSpeed: 5
+                        sprintMultiplier: 10
+                        dodgeSpeed: 15
+                        dodgeDuration: 0.75
+                        jumpForce: 2.5
+                        climbSpeed: 3
+                        gravityDirection: {x: 0, y: -1, z: 0}
+                      currentCarryWeight: 0
+                      maxCarryWeight: 100
+                      frostResistance: 0.25
+                      maxFrostResitance: 0.75
+                      lungCapacity: 0.35
+                      maxLungCapacity: 1
+                    moveSpeed: 5
+                    sprintMultiplier: 10
+                    dodgeSpeed: 15
+                    dodgeDuration: 0.75
+                    jumpForce: 2.5
+                    climbSpeed: 3
+                    gravityDirection: {x: 0, y: -1, z: 0}
+                  currentCarryWeight: 0
+                  maxCarryWeight: 100
+                  frostResistance: 0.25
+                  maxFrostResitance: 0.75
+                  lungCapacity: 0.35
+                  maxLungCapacity: 1
+                moveSpeed: 5
+                sprintMultiplier: 10
+                dodgeSpeed: 15
+                dodgeDuration: 0.75
+                jumpForce: 2.5
+                climbSpeed: 3
+                gravityDirection: {x: 0, y: -1, z: 0}
+              currentCarryWeight: 0
+              maxCarryWeight: 100
+              frostResistance: 0.25
+              maxFrostResitance: 0.75
+              lungCapacity: 0.35
+              maxLungCapacity: 1
+            moveSpeed: 5
+            sprintMultiplier: 10
+            dodgeSpeed: 15
+            dodgeDuration: 0.75
+            jumpForce: 2.5
+            climbSpeed: 3
+            gravityDirection: {x: 0, y: -1, z: 0}
+          currentCarryWeight: 0
+          maxCarryWeight: 100
+          frostResistance: 0.25
+          maxFrostResitance: 0.75
+          lungCapacity: 0.35
+          maxLungCapacity: 1
+        moveSpeed: 5
+        sprintMultiplier: 10
+        dodgeSpeed: 15
+        dodgeDuration: 0.75
+        jumpForce: 2.5
+        climbSpeed: 3
+        gravityDirection: {x: 0, y: -1, z: 0}
+      currentCarryWeight: 0
+      maxCarryWeight: 100
+      frostResistance: 0.25
+      maxFrostResitance: 0.75
+      lungCapacity: 0.35
+      maxLungCapacity: 1
+    myLuck:
+      isInitialized: 0
+      autoStart: 1
+      autoEnable: 1
+      autoActivate: 1
+      parentManager: {fileID: 0}
+      _updateMode: 1
+      _statName: Luck
+      _levelValue: 1
+      statLevelRate: 0.2
+      itemDiscovery: 0.35
+      critHitChance: 0.15
+      critHitDamageMultiplier: 1.65
+      avoidDamageChance: 0.05
+    myFaith:
+      isInitialized: 0
+      autoStart: 1
+      autoEnable: 1
+      autoActivate: 1
+      parentManager: {fileID: 0}
+      _updateMode: 1
+      _statName: Faith
+      _levelValue: 1
+      statLevelRate: 0.2
+      karma: 0.5
+      poisonResistance: 0.15
+      maxPosionResistance: 0.95
+      fireResistance: 0.15
+      maxFireResistance: 1
+      faithSpellMult: 0.35
     myIntelligence:
       isInitialized: 0
       autoStart: 1
       autoEnable: 1
       autoActivate: 1
+      parentManager: {fileID: 0}
       _updateMode: 1
-      _statName: 
-      _levelValue: 0
+      _statName: Intelligence
+      _levelValue: 1
       statLevelRate: 0.2
       myWisdom:
         isInitialized: 0
         autoStart: 1
         autoEnable: 1
         autoActivate: 1
+        parentManager: {fileID: 0}
         _updateMode: 1
         _statName: 
         _levelValue: 0
@@ -5033,6 +4938,7 @@ MonoBehaviour:
           autoStart: 1
           autoEnable: 1
           autoActivate: 1
+          parentManager: {fileID: 0}
           _updateMode: 1
           _statName: 
           _levelValue: 0
@@ -5042,6 +4948,7 @@ MonoBehaviour:
             autoStart: 1
             autoEnable: 1
             autoActivate: 1
+            parentManager: {fileID: 0}
             _updateMode: 1
             _statName: 
             _levelValue: 0
@@ -5051,6 +4958,7 @@ MonoBehaviour:
               autoStart: 1
               autoEnable: 1
               autoActivate: 1
+              parentManager: {fileID: 0}
               _updateMode: 1
               _statName: 
               _levelValue: 0
@@ -5060,6 +4968,7 @@ MonoBehaviour:
                 autoStart: 1
                 autoEnable: 1
                 autoActivate: 1
+                parentManager: {fileID: 0}
                 _updateMode: 1
                 _statName: 
                 _levelValue: 0
@@ -5069,6 +4978,7 @@ MonoBehaviour:
                   autoStart: 1
                   autoEnable: 1
                   autoActivate: 1
+                  parentManager: {fileID: 0}
                   _updateMode: 1
                   _statName: 
                   _levelValue: 0
@@ -5078,6 +4988,7 @@ MonoBehaviour:
                     autoStart: 1
                     autoEnable: 1
                     autoActivate: 1
+                    parentManager: {fileID: 0}
                     _updateMode: 1
                     _statName: 
                     _levelValue: 0
@@ -5087,11 +4998,111 @@ MonoBehaviour:
                       autoStart: 1
                       autoEnable: 1
                       autoActivate: 1
+                      parentManager: {fileID: 0}
                       _updateMode: 1
                       _statName: 
                       _levelValue: 0
                       statLevelRate: 0.2
                       myWisdom:
+                        isInitialized: 0
+                        autoStart: 1
+                        autoEnable: 1
+                        autoActivate: 1
+                        _updateMode: 1
+                        _statName: 
+                        _levelValue: 0
+                        statLevelRate: 0.2
+    myWisdom:
+      isInitialized: 0
+      autoStart: 1
+      autoEnable: 1
+      autoActivate: 1
+      parentManager: {fileID: 0}
+      _updateMode: 1
+      _statName: Wisdom
+      _levelValue: 1
+      statLevelRate: 0.2
+      myIntelligence:
+        isInitialized: 0
+        autoStart: 1
+        autoEnable: 1
+        autoActivate: 1
+        parentManager: {fileID: 0}
+        _updateMode: 1
+        _statName: 
+        _levelValue: 0
+        statLevelRate: 0.2
+        myWisdom:
+          isInitialized: 0
+          autoStart: 1
+          autoEnable: 1
+          autoActivate: 1
+          parentManager: {fileID: 0}
+          _updateMode: 1
+          _statName: 
+          _levelValue: 0
+          statLevelRate: 0.2
+          myIntelligence:
+            isInitialized: 0
+            autoStart: 1
+            autoEnable: 1
+            autoActivate: 1
+            parentManager: {fileID: 0}
+            _updateMode: 1
+            _statName: 
+            _levelValue: 0
+            statLevelRate: 0.2
+            myWisdom:
+              isInitialized: 0
+              autoStart: 1
+              autoEnable: 1
+              autoActivate: 1
+              parentManager: {fileID: 0}
+              _updateMode: 1
+              _statName: 
+              _levelValue: 0
+              statLevelRate: 0.2
+              myIntelligence:
+                isInitialized: 0
+                autoStart: 1
+                autoEnable: 1
+                autoActivate: 1
+                parentManager: {fileID: 0}
+                _updateMode: 1
+                _statName: 
+                _levelValue: 0
+                statLevelRate: 0.2
+                myWisdom:
+                  isInitialized: 0
+                  autoStart: 1
+                  autoEnable: 1
+                  autoActivate: 1
+                  parentManager: {fileID: 0}
+                  _updateMode: 1
+                  _statName: 
+                  _levelValue: 0
+                  statLevelRate: 0.2
+                  myIntelligence:
+                    isInitialized: 0
+                    autoStart: 1
+                    autoEnable: 1
+                    autoActivate: 1
+                    parentManager: {fileID: 0}
+                    _updateMode: 1
+                    _statName: 
+                    _levelValue: 0
+                    statLevelRate: 0.2
+                    myWisdom:
+                      isInitialized: 0
+                      autoStart: 1
+                      autoEnable: 1
+                      autoActivate: 1
+                      parentManager: {fileID: 0}
+                      _updateMode: 1
+                      _statName: 
+                      _levelValue: 0
+                      statLevelRate: 0.2
+                      myIntelligence:
                         isInitialized: 0
                         autoStart: 1
                         autoEnable: 1

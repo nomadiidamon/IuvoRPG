@@ -34,6 +34,19 @@ public class Stamina : Stat
 
     public void Recharge()
     {
+
+        if (maxRechargeValue > maxStamina)
+        {
+            maxRechargeValue = maxStamina;
+        }
+
+        if (currentStamina > maxRechargeValue)
+        {
+            currentStamina = maxRechargeValue;
+        }
+
+
+
         if (currentStamina != maxRechargeValue)
         {
             if (currentTime >= _RechargeSpeed)

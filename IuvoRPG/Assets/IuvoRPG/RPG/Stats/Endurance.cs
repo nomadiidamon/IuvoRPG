@@ -16,5 +16,9 @@ public class Endurance : Stat
     [SerializeField] float lungCapacity = 0.35f;
     [SerializeField] float maxLungCapacity = 1.0f;
 
-
+    public override void OnStart()
+    {
+        _levelValue = 1;
+        _statName = "Endurance";
+    }
 }

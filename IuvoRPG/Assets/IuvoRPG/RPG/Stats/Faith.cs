@@ -22,6 +22,11 @@ public class Faith : Stat
     [Header("Faith Based Bonuses")]
     [SerializeField] private float faithSpellMult = 0.35f;
 
+    public override void OnStart()
+    {
+        _levelValue = 1;
+        _statName = "Faith";
+    }
 
     #region Stat Utility Functions
     public int GetFaithSpellDamageAmount(int damageAmount) => (int)(faithSpellMult * damageAmount);

@@ -18,6 +18,12 @@ public class Agility : Stat
 
     [SerializeField] Vector3 gravityDirection = Vector3.down;
 
+    public override void OnStart()
+    {
+        _levelValue = 1;
+        _statName = "Agility";
+    }
+
 
     #region Getters & Setters
         

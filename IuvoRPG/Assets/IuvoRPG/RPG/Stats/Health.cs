@@ -37,6 +37,17 @@ public class Health : Stat, IRecharge
 
     public void Recharge()
     {
+        if (maxRechargeValue > maxHealth)
+        {
+            maxRechargeValue = maxHealth;
+        }
+
+        if (currentHealth > maxRechargeValue)
+        {
+            currentHealth = maxRechargeValue;
+        }
+
+
         if (currentHealth != maxRechargeValue)
         {
             if (currentTime >= _RechargeSpeed)

@@ -33,6 +33,18 @@ public class Mana : Stat
 
     public void Recharge()
     {
+
+        if (maxRechargeValue > maxMana)
+        {
+            maxRechargeValue = maxMana;
+        }
+
+        if (currentMana > maxRechargeValue)
+        {
+            currentMana = maxRechargeValue;
+        }
+
+
         if (currentMana != maxRechargeValue)
         {
             if (currentTime >= _RechargeSpeed)
