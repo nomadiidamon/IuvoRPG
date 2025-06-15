@@ -24,6 +24,8 @@ public class PlayerUIHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] public GameObject AimReticle;
 
     [SerializeField] public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.UIHandler;
+
 
     public void Awake()
     {

@@ -17,7 +17,9 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] private CinemachinePanTilt cameraPanTiltComponent;
     [SerializeField] private CinemachinePositionComposer positionComposer;
 
-    [SerializeField] public Context playerContext { get; set; }
+    public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.AimHandler;
+
 
 
     [Header("Settings")]

@@ -14,6 +14,8 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
 
 
     [SerializeField] public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.RotationHandler;
+
 
 
     public void Start()

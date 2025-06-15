@@ -36,6 +36,8 @@ public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
     private Dictionary<CameraStyle, CinemachineCamera> camDict;
 
     [SerializeField] public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.CameraHandler;
+
 
 
     public void Start()

@@ -6,7 +6,8 @@ public class PlayerMovementHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] private PlayerAnimatorHandler playerAnimatorHandler;
     [SerializeField] private PlayerCameraHandler playerCameraHandler;
 
-    [SerializeField] public Context playerContext { get; set; }
+    public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.MovementHandler;
 
 
     [Header("Custom Gravity Settings")]
@@ -14,8 +15,8 @@ public class PlayerMovementHandler : MonoBehaviour, IPlayerHandler
     public float customGravityStrength = 9.81f;
 
     [Header("Runtime Values")]
-    [SerializeField] public Vector3 movementDir;
-    [SerializeField] private float velocity;
+    private Vector3 movementDir;
+    private float velocity;
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool isMoving = false;
     [SerializeField] private bool isSprinting = false;

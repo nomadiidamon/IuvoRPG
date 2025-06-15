@@ -6,6 +6,8 @@ public class PlayerAnimatorHandler : MonoBehaviour, IPlayerHandler
 
 
     [SerializeField] public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.AnimatorHandler;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

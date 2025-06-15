@@ -6,6 +6,8 @@ using System.Linq;
 using UnityEngine;
 
 public enum ContextActorKey { Player, Target, Ally, Enemy, Camera, Interactable }
+public enum ContextPlayerHandlerKey { AimHandler, AnimatorHandler, CameraHandler, InputHandler, 
+    MovementHandler, RotationHandler, StatHandler, UIHandler, PlayerManager} 
 public enum ContextStateKey { IsUnderAttack, IsVisible, IsMoving, IsGrounded, IsAiming, IsDead, IsPaused, IsSprinting }
 public enum ContextStatKey { PlayerStats, CharcterStats, Score, DistanceToTarget, TimeSinceLastSeen, CooldownTime }
 public enum ContextTransformKey { Transform, Position, Destination, Velocity, Direction, LookTarget, LastDirection, InputDirection }
@@ -18,6 +20,7 @@ public static class ContextKeyGroups
     public static readonly Type[] AllowedKeys = new[]
     {
         typeof(ContextActorKey),
+        typeof(ContextPlayerHandlerKey),
         typeof(ContextStateKey),
         typeof(ContextStatKey),
         typeof(ContextTransformKey),

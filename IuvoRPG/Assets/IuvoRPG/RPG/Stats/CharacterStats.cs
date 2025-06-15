@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class CharacterStats : SemiBehavior
+public class CharacterStats : SemiBehavior // (POCO) psuedo monobehavior with lifecycle hooks
 {
     public bool logStatsNow = false;
 

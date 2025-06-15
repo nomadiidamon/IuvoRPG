@@ -20,6 +20,8 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
     public FlexibleEvent OnSwitchShoulders = new FlexibleEvent();
 
     [SerializeField] public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.InputHandler;
+
 
 
     private void Awake()

@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, IPlayerHandler
 {
     public static PlayerManager Instance;
 
     [SerializeField] public Player playerRef;
     public Transform playerTransform;
+
+    public Context playerContext { get; set; }
+    public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.PlayerManager;
+    
 
 
     private void Awake()
@@ -18,15 +22,14 @@ public class PlayerManager : MonoBehaviour
             playerRef = FindFirstObjectByType<Player>();
         }
 
-    }
+        IPlayerHandler handler = this;
+        if (handler != null) handler.UpdateHandlerInContext();
 
-    void Start()
-    {
-        
     }
 
     void Update()
     {
         playerTransform.position = playerRef.transform.position;
     }
+
 }
