@@ -4,9 +4,11 @@ using UnityEngine;
 [Serializable]
 public class Agility : Stat
 {
-    [SerializeField] Endurance myEndurance;
 
     [SerializeField] float moveSpeed = 5.0f;
+    [SerializeField] float moveRotationSpeed = 5.5f;
+    [SerializeField] float aimRotationSpeed = 3.0f;
+
     [SerializeField] float sprintMultiplier = 10.0f;
 
     [SerializeField] float dodgeSpeed = 15.0f;
@@ -17,6 +19,8 @@ public class Agility : Stat
     [SerializeField] float climbSpeed = 3.0f;
 
     [SerializeField] Vector3 gravityDirection = Vector3.down;
+    
+    [SerializeField] Endurance myEndurance;
 
     public override void OnStart()
     {
@@ -28,6 +32,8 @@ public class Agility : Stat
     #region Getters & Setters
         
     public float GetMoveSpeed(bool isSprinting) => moveSpeed * (isSprinting ? sprintMultiplier : 1f);
+    public float GetMoveRotationSpeed() => moveRotationSpeed;
+    public float GetAimRotationSpeed() => aimRotationSpeed;
     public float GetSprintMultiplier() => sprintMultiplier;
     public float GetDodgeSpeed() => dodgeSpeed;
     public float GetDodgeDuration() => dodgeDuration;
@@ -37,6 +43,8 @@ public class Agility : Stat
 
 
     public void SetMoveSpeed(float moveSpeed) => this.moveSpeed = moveSpeed;
+    public void SetMoveRotationSpeed(float moveRotSpeed) => this.moveRotationSpeed = moveRotSpeed;
+    public void SetAimRotationSpeed(float aimRotSpeed) => this.aimRotationSpeed = aimRotSpeed;
     public void SetSprintMultiplier(float sprintMult) => this.sprintMultiplier = sprintMult;
     public void SetDodgeSpeed(float newSpeed) => this.dodgeSpeed = newSpeed;
     public void SetDodgeDuration(float newDuration) => this.dodgeDuration = newDuration;

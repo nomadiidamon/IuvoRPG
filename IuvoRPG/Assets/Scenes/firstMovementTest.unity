@@ -321,8 +321,8 @@ MonoBehaviour:
   aimHandler: {fileID: 7526292299205417973}
   movementHandler: {fileID: 478211433}
   aimTargetTransform: {fileID: 6661959574595277570}
-  moveRotationSpeed: 2.5
-  aimRotationSpeed: 1
+  MoveRotVelocity: 0
+  AimRotVelocity: 0
 --- !u!1 &472470156
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,190 +506,10 @@ MonoBehaviour:
   playerCharacterController: {fileID: 8164228282134129235}
   playerAnimatorHandler: {fileID: 313168421}
   playerCameraHandler: {fileID: 6884265747779145975}
-  playerAgility:
-    isInitialized: 0
-    autoStart: 1
-    autoEnable: 1
-    autoActivate: 1
-    parentManager: {fileID: 0}
-    _updateMode: 1
-    _statName: 
-    _levelValue: 0
-    statLevelRate: 0.2
-    myEndurance:
-      isInitialized: 0
-      autoStart: 1
-      autoEnable: 1
-      autoActivate: 1
-      parentManager: {fileID: 0}
-      _updateMode: 1
-      _statName: 
-      _levelValue: 0
-      statLevelRate: 0.2
-      myAgility:
-        isInitialized: 0
-        autoStart: 1
-        autoEnable: 1
-        autoActivate: 1
-        parentManager: {fileID: 0}
-        _updateMode: 1
-        _statName: 
-        _levelValue: 0
-        statLevelRate: 0.2
-        myEndurance:
-          isInitialized: 0
-          autoStart: 1
-          autoEnable: 1
-          autoActivate: 1
-          parentManager: {fileID: 0}
-          _updateMode: 1
-          _statName: 
-          _levelValue: 0
-          statLevelRate: 0.2
-          myAgility:
-            isInitialized: 0
-            autoStart: 1
-            autoEnable: 1
-            autoActivate: 1
-            parentManager: {fileID: 0}
-            _updateMode: 1
-            _statName: 
-            _levelValue: 0
-            statLevelRate: 0.2
-            myEndurance:
-              isInitialized: 0
-              autoStart: 1
-              autoEnable: 1
-              autoActivate: 1
-              parentManager: {fileID: 0}
-              _updateMode: 1
-              _statName: 
-              _levelValue: 0
-              statLevelRate: 0.2
-              myAgility:
-                isInitialized: 0
-                autoStart: 1
-                autoEnable: 1
-                autoActivate: 1
-                parentManager: {fileID: 0}
-                _updateMode: 1
-                _statName: 
-                _levelValue: 0
-                statLevelRate: 0.2
-                myEndurance:
-                  isInitialized: 0
-                  autoStart: 1
-                  autoEnable: 1
-                  autoActivate: 1
-                  parentManager: {fileID: 0}
-                  _updateMode: 1
-                  _statName: 
-                  _levelValue: 0
-                  statLevelRate: 0.2
-                  myAgility:
-                    isInitialized: 0
-                    autoStart: 1
-                    autoEnable: 1
-                    autoActivate: 1
-                    parentManager: {fileID: 0}
-                    _updateMode: 1
-                    _statName: 
-                    _levelValue: 0
-                    statLevelRate: 0.2
-                    myEndurance:
-                      isInitialized: 0
-                      autoStart: 1
-                      autoEnable: 1
-                      autoActivate: 1
-                      parentManager: {fileID: 0}
-                      _updateMode: 1
-                      _statName: 
-                      _levelValue: 0
-                      statLevelRate: 0.2
-                      myAgility:
-                        isInitialized: 0
-                        autoStart: 1
-                        autoEnable: 1
-                        autoActivate: 1
-                        _updateMode: 1
-                        _statName: 
-                        _levelValue: 0
-                        statLevelRate: 0.2
-                        moveSpeed: 5
-                        sprintMultiplier: 10
-                        dodgeSpeed: 15
-                        dodgeDuration: 0.75
-                        jumpForce: 2.5
-                        climbSpeed: 3
-                        gravityDirection: {x: 0, y: -1, z: 0}
-                      currentCarryWeight: 0
-                      maxCarryWeight: 100
-                      frostResistance: 0.25
-                      maxFrostResitance: 0.75
-                      lungCapacity: 0.35
-                      maxLungCapacity: 1
-                    moveSpeed: 5
-                    sprintMultiplier: 10
-                    dodgeSpeed: 15
-                    dodgeDuration: 0.75
-                    jumpForce: 2.5
-                    climbSpeed: 3
-                    gravityDirection: {x: 0, y: -1, z: 0}
-                  currentCarryWeight: 0
-                  maxCarryWeight: 100
-                  frostResistance: 0.25
-                  maxFrostResitance: 0.75
-                  lungCapacity: 0.35
-                  maxLungCapacity: 1
-                moveSpeed: 5
-                sprintMultiplier: 10
-                dodgeSpeed: 15
-                dodgeDuration: 0.75
-                jumpForce: 2.5
-                climbSpeed: 3
-                gravityDirection: {x: 0, y: -1, z: 0}
-              currentCarryWeight: 0
-              maxCarryWeight: 100
-              frostResistance: 0.25
-              maxFrostResitance: 0.75
-              lungCapacity: 0.35
-              maxLungCapacity: 1
-            moveSpeed: 5
-            sprintMultiplier: 10
-            dodgeSpeed: 15
-            dodgeDuration: 0.75
-            jumpForce: 2.5
-            climbSpeed: 3
-            gravityDirection: {x: 0, y: -1, z: 0}
-          currentCarryWeight: 0
-          maxCarryWeight: 100
-          frostResistance: 0.25
-          maxFrostResitance: 0.75
-          lungCapacity: 0.35
-          maxLungCapacity: 1
-        moveSpeed: 5
-        sprintMultiplier: 10
-        dodgeSpeed: 15
-        dodgeDuration: 0.75
-        jumpForce: 2.5
-        climbSpeed: 3
-        gravityDirection: {x: 0, y: -1, z: 0}
-      currentCarryWeight: 0
-      maxCarryWeight: 100
-      frostResistance: 0.25
-      maxFrostResitance: 0.75
-      lungCapacity: 0.35
-      maxLungCapacity: 1
-    moveSpeed: 5
-    sprintMultiplier: 10
-    dodgeSpeed: 15
-    dodgeDuration: 0.75
-    jumpForce: 2.5
-    climbSpeed: 3
-    gravityDirection: {x: 0, y: -1, z: 0}
   customGravityDirection: {x: 0, y: -1, z: 0}
   customGravityStrength: 9.81
   movementDir: {x: 0, y: 0, z: 0}
+  velocity: 0
   isGrounded: 0
   isMoving: 0
   isSprinting: 0
@@ -4319,7 +4139,7 @@ MonoBehaviour:
       maxRechargeValue: 75
       statLerpSpeed: 0.43
       rechargeAmount: 2
-      rechargeSpeed: 1.5
+      rechargeSpeed: 1.95
       currentTime: 0
       OnTakeDamage:
         unityEvent:
@@ -4339,7 +4159,7 @@ MonoBehaviour:
       maxStamina: 100
       maxRechargeValue: 100
       rechargeAmount: 3
-      rechargeSpeed: 0.25
+      rechargeSpeed: 0.74
       currentTime: 0
     myMana:
       isInitialized: 0
@@ -4355,7 +4175,7 @@ MonoBehaviour:
       maxMana: 100
       maxRechargeValue: 75
       rechargeAmount: 2
-      rechargeSpeed: 2.75
+      rechargeSpeed: 3.1
       currentTime: 0
     myStrength:
       isInitialized: 0
@@ -4565,6 +4385,15 @@ MonoBehaviour:
       _statName: Agility
       _levelValue: 1
       statLevelRate: 0.2
+      moveSpeed: 2.5
+      moveRotationSpeed: 0.5
+      aimRotationSpeed: 3
+      sprintMultiplier: 1.5
+      dodgeSpeed: 15
+      dodgeDuration: 0.75
+      jumpForce: 2.5
+      climbSpeed: 3
+      gravityDirection: {x: 0, y: -1, z: 0}
       myEndurance:
         isInitialized: 0
         autoStart: 1
@@ -4575,6 +4404,12 @@ MonoBehaviour:
         _statName: 
         _levelValue: 0
         statLevelRate: 0.2
+        currentCarryWeight: 0
+        maxCarryWeight: 100
+        frostResistance: 0.25
+        maxFrostResitance: 0.75
+        lungCapacity: 0.35
+        maxLungCapacity: 1
         myAgility:
           isInitialized: 0
           autoStart: 1
@@ -4585,6 +4420,15 @@ MonoBehaviour:
           _statName: 
           _levelValue: 0
           statLevelRate: 0.2
+          moveSpeed: 5
+          moveRotationSpeed: 5.5
+          aimRotationSpeed: 3
+          sprintMultiplier: 10
+          dodgeSpeed: 15
+          dodgeDuration: 0.75
+          jumpForce: 2.5
+          climbSpeed: 3
+          gravityDirection: {x: 0, y: -1, z: 0}
           myEndurance:
             isInitialized: 0
             autoStart: 1
@@ -4595,6 +4439,12 @@ MonoBehaviour:
             _statName: 
             _levelValue: 0
             statLevelRate: 0.2
+            currentCarryWeight: 0
+            maxCarryWeight: 100
+            frostResistance: 0.25
+            maxFrostResitance: 0.75
+            lungCapacity: 0.35
+            maxLungCapacity: 1
             myAgility:
               isInitialized: 0
               autoStart: 1
@@ -4605,6 +4455,15 @@ MonoBehaviour:
               _statName: 
               _levelValue: 0
               statLevelRate: 0.2
+              moveSpeed: 5
+              moveRotationSpeed: 5.5
+              aimRotationSpeed: 3
+              sprintMultiplier: 10
+              dodgeSpeed: 15
+              dodgeDuration: 0.75
+              jumpForce: 2.5
+              climbSpeed: 3
+              gravityDirection: {x: 0, y: -1, z: 0}
               myEndurance:
                 isInitialized: 0
                 autoStart: 1
@@ -4615,6 +4474,12 @@ MonoBehaviour:
                 _statName: 
                 _levelValue: 0
                 statLevelRate: 0.2
+                currentCarryWeight: 0
+                maxCarryWeight: 100
+                frostResistance: 0.25
+                maxFrostResitance: 0.75
+                lungCapacity: 0.35
+                maxLungCapacity: 1
                 myAgility:
                   isInitialized: 0
                   autoStart: 1
@@ -4625,6 +4490,15 @@ MonoBehaviour:
                   _statName: 
                   _levelValue: 0
                   statLevelRate: 0.2
+                  moveSpeed: 5
+                  moveRotationSpeed: 5.5
+                  aimRotationSpeed: 3
+                  sprintMultiplier: 10
+                  dodgeSpeed: 15
+                  dodgeDuration: 0.75
+                  jumpForce: 2.5
+                  climbSpeed: 3
+                  gravityDirection: {x: 0, y: -1, z: 0}
                   myEndurance:
                     isInitialized: 0
                     autoStart: 1
@@ -4635,6 +4509,12 @@ MonoBehaviour:
                     _statName: 
                     _levelValue: 0
                     statLevelRate: 0.2
+                    currentCarryWeight: 0
+                    maxCarryWeight: 100
+                    frostResistance: 0.25
+                    maxFrostResitance: 0.75
+                    lungCapacity: 0.35
+                    maxLungCapacity: 1
                     myAgility:
                       isInitialized: 0
                       autoStart: 1
@@ -4645,6 +4525,15 @@ MonoBehaviour:
                       _statName: 
                       _levelValue: 0
                       statLevelRate: 0.2
+                      moveSpeed: 5
+                      moveRotationSpeed: 5.5
+                      aimRotationSpeed: 3
+                      sprintMultiplier: 10
+                      dodgeSpeed: 15
+                      dodgeDuration: 0.75
+                      jumpForce: 2.5
+                      climbSpeed: 3
+                      gravityDirection: {x: 0, y: -1, z: 0}
                       myEndurance:
                         isInitialized: 0
                         autoStart: 1
@@ -4660,65 +4549,6 @@ MonoBehaviour:
                         maxFrostResitance: 0.75
                         lungCapacity: 0.35
                         maxLungCapacity: 1
-                      moveSpeed: 5
-                      sprintMultiplier: 10
-                      dodgeSpeed: 15
-                      dodgeDuration: 0.75
-                      jumpForce: 2.5
-                      climbSpeed: 3
-                      gravityDirection: {x: 0, y: -1, z: 0}
-                    currentCarryWeight: 0
-                    maxCarryWeight: 100
-                    frostResistance: 0.25
-                    maxFrostResitance: 0.75
-                    lungCapacity: 0.35
-                    maxLungCapacity: 1
-                  moveSpeed: 5
-                  sprintMultiplier: 10
-                  dodgeSpeed: 15
-                  dodgeDuration: 0.75
-                  jumpForce: 2.5
-                  climbSpeed: 3
-                  gravityDirection: {x: 0, y: -1, z: 0}
-                currentCarryWeight: 0
-                maxCarryWeight: 100
-                frostResistance: 0.25
-                maxFrostResitance: 0.75
-                lungCapacity: 0.35
-                maxLungCapacity: 1
-              moveSpeed: 5
-              sprintMultiplier: 10
-              dodgeSpeed: 15
-              dodgeDuration: 0.75
-              jumpForce: 2.5
-              climbSpeed: 3
-              gravityDirection: {x: 0, y: -1, z: 0}
-            currentCarryWeight: 0
-            maxCarryWeight: 100
-            frostResistance: 0.25
-            maxFrostResitance: 0.75
-            lungCapacity: 0.35
-            maxLungCapacity: 1
-          moveSpeed: 5
-          sprintMultiplier: 10
-          dodgeSpeed: 15
-          dodgeDuration: 0.75
-          jumpForce: 2.5
-          climbSpeed: 3
-          gravityDirection: {x: 0, y: -1, z: 0}
-        currentCarryWeight: 0
-        maxCarryWeight: 100
-        frostResistance: 0.25
-        maxFrostResitance: 0.75
-        lungCapacity: 0.35
-        maxLungCapacity: 1
-      moveSpeed: 5
-      sprintMultiplier: 10
-      dodgeSpeed: 15
-      dodgeDuration: 0.75
-      jumpForce: 2.5
-      climbSpeed: 3
-      gravityDirection: {x: 0, y: -1, z: 0}
     myEndurance:
       isInitialized: 0
       autoStart: 1
@@ -4729,6 +4559,12 @@ MonoBehaviour:
       _statName: Endurance
       _levelValue: 1
       statLevelRate: 0.2
+      currentCarryWeight: 0
+      maxCarryWeight: 100
+      frostResistance: 0.25
+      maxFrostResitance: 0.75
+      lungCapacity: 0.35
+      maxLungCapacity: 1
       myAgility:
         isInitialized: 0
         autoStart: 1
@@ -4739,6 +4575,15 @@ MonoBehaviour:
         _statName: 
         _levelValue: 0
         statLevelRate: 0.2
+        moveSpeed: 5
+        moveRotationSpeed: 5.5
+        aimRotationSpeed: 3
+        sprintMultiplier: 10
+        dodgeSpeed: 15
+        dodgeDuration: 0.75
+        jumpForce: 2.5
+        climbSpeed: 3
+        gravityDirection: {x: 0, y: -1, z: 0}
         myEndurance:
           isInitialized: 0
           autoStart: 1
@@ -4749,6 +4594,12 @@ MonoBehaviour:
           _statName: 
           _levelValue: 0
           statLevelRate: 0.2
+          currentCarryWeight: 0
+          maxCarryWeight: 100
+          frostResistance: 0.25
+          maxFrostResitance: 0.75
+          lungCapacity: 0.35
+          maxLungCapacity: 1
           myAgility:
             isInitialized: 0
             autoStart: 1
@@ -4759,6 +4610,15 @@ MonoBehaviour:
             _statName: 
             _levelValue: 0
             statLevelRate: 0.2
+            moveSpeed: 5
+            moveRotationSpeed: 5.5
+            aimRotationSpeed: 3
+            sprintMultiplier: 10
+            dodgeSpeed: 15
+            dodgeDuration: 0.75
+            jumpForce: 2.5
+            climbSpeed: 3
+            gravityDirection: {x: 0, y: -1, z: 0}
             myEndurance:
               isInitialized: 0
               autoStart: 1
@@ -4769,6 +4629,12 @@ MonoBehaviour:
               _statName: 
               _levelValue: 0
               statLevelRate: 0.2
+              currentCarryWeight: 0
+              maxCarryWeight: 100
+              frostResistance: 0.25
+              maxFrostResitance: 0.75
+              lungCapacity: 0.35
+              maxLungCapacity: 1
               myAgility:
                 isInitialized: 0
                 autoStart: 1
@@ -4779,6 +4645,15 @@ MonoBehaviour:
                 _statName: 
                 _levelValue: 0
                 statLevelRate: 0.2
+                moveSpeed: 5
+                moveRotationSpeed: 5.5
+                aimRotationSpeed: 3
+                sprintMultiplier: 10
+                dodgeSpeed: 15
+                dodgeDuration: 0.75
+                jumpForce: 2.5
+                climbSpeed: 3
+                gravityDirection: {x: 0, y: -1, z: 0}
                 myEndurance:
                   isInitialized: 0
                   autoStart: 1
@@ -4789,6 +4664,12 @@ MonoBehaviour:
                   _statName: 
                   _levelValue: 0
                   statLevelRate: 0.2
+                  currentCarryWeight: 0
+                  maxCarryWeight: 100
+                  frostResistance: 0.25
+                  maxFrostResitance: 0.75
+                  lungCapacity: 0.35
+                  maxLungCapacity: 1
                   myAgility:
                     isInitialized: 0
                     autoStart: 1
@@ -4799,6 +4680,15 @@ MonoBehaviour:
                     _statName: 
                     _levelValue: 0
                     statLevelRate: 0.2
+                    moveSpeed: 5
+                    moveRotationSpeed: 5.5
+                    aimRotationSpeed: 3
+                    sprintMultiplier: 10
+                    dodgeSpeed: 15
+                    dodgeDuration: 0.75
+                    jumpForce: 2.5
+                    climbSpeed: 3
+                    gravityDirection: {x: 0, y: -1, z: 0}
                     myEndurance:
                       isInitialized: 0
                       autoStart: 1
@@ -4809,6 +4699,12 @@ MonoBehaviour:
                       _statName: 
                       _levelValue: 0
                       statLevelRate: 0.2
+                      currentCarryWeight: 0
+                      maxCarryWeight: 100
+                      frostResistance: 0.25
+                      maxFrostResitance: 0.75
+                      lungCapacity: 0.35
+                      maxLungCapacity: 1
                       myAgility:
                         isInitialized: 0
                         autoStart: 1
@@ -4819,70 +4715,14 @@ MonoBehaviour:
                         _levelValue: 0
                         statLevelRate: 0.2
                         moveSpeed: 5
+                        moveRotationSpeed: 5.5
+                        aimRotationSpeed: 3
                         sprintMultiplier: 10
                         dodgeSpeed: 15
                         dodgeDuration: 0.75
                         jumpForce: 2.5
                         climbSpeed: 3
                         gravityDirection: {x: 0, y: -1, z: 0}
-                      currentCarryWeight: 0
-                      maxCarryWeight: 100
-                      frostResistance: 0.25
-                      maxFrostResitance: 0.75
-                      lungCapacity: 0.35
-                      maxLungCapacity: 1
-                    moveSpeed: 5
-                    sprintMultiplier: 10
-                    dodgeSpeed: 15
-                    dodgeDuration: 0.75
-                    jumpForce: 2.5
-                    climbSpeed: 3
-                    gravityDirection: {x: 0, y: -1, z: 0}
-                  currentCarryWeight: 0
-                  maxCarryWeight: 100
-                  frostResistance: 0.25
-                  maxFrostResitance: 0.75
-                  lungCapacity: 0.35
-                  maxLungCapacity: 1
-                moveSpeed: 5
-                sprintMultiplier: 10
-                dodgeSpeed: 15
-                dodgeDuration: 0.75
-                jumpForce: 2.5
-                climbSpeed: 3
-                gravityDirection: {x: 0, y: -1, z: 0}
-              currentCarryWeight: 0
-              maxCarryWeight: 100
-              frostResistance: 0.25
-              maxFrostResitance: 0.75
-              lungCapacity: 0.35
-              maxLungCapacity: 1
-            moveSpeed: 5
-            sprintMultiplier: 10
-            dodgeSpeed: 15
-            dodgeDuration: 0.75
-            jumpForce: 2.5
-            climbSpeed: 3
-            gravityDirection: {x: 0, y: -1, z: 0}
-          currentCarryWeight: 0
-          maxCarryWeight: 100
-          frostResistance: 0.25
-          maxFrostResitance: 0.75
-          lungCapacity: 0.35
-          maxLungCapacity: 1
-        moveSpeed: 5
-        sprintMultiplier: 10
-        dodgeSpeed: 15
-        dodgeDuration: 0.75
-        jumpForce: 2.5
-        climbSpeed: 3
-        gravityDirection: {x: 0, y: -1, z: 0}
-      currentCarryWeight: 0
-      maxCarryWeight: 100
-      frostResistance: 0.25
-      maxFrostResitance: 0.75
-      lungCapacity: 0.35
-      maxLungCapacity: 1
     myLuck:
       isInitialized: 0
       autoStart: 1
@@ -5581,7 +5421,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0.9, y: 1.75, z: 0}
-  Damping: {x: 0.15, y: 0.35, z: 0.4}
+  Damping: {x: 0.15, y: 0.2, z: 0.1}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -5835,6 +5675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerForward: {fileID: 2194437996555965320}
   playerAim: {fileID: 6661959574595277570}
+  mainCamera: {fileID: 1080642980}
   currentCameraStyle: 0
   activeCam: {fileID: 0}
   explorationCam: {fileID: 8798779901716929134}
@@ -7042,11 +6883,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReferenceFrame: 2
-  RecenterTarget: 0
+  RecenterTarget: 1
   PanAxis:
     Value: 0
     Center: 0
-    Range: {x: -190, y: 180}
+    Range: {x: -180, y: 180}
     Wrap: 1
     Recentering:
       Enabled: 0

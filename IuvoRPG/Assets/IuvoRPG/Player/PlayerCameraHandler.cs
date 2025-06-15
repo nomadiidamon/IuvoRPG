@@ -20,6 +20,7 @@ public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
 {
     [SerializeField] private Transform playerForward;
     [SerializeField] private Transform playerAim;
+    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private CameraStyle currentCameraStyle;
 
@@ -110,4 +111,6 @@ public class PlayerCameraHandler : MonoBehaviour, IPlayerHandler
     }
 
     public Transform GetCurrentCameraTransform() => activeCam.transform;
-}
+
+    public Camera GetMainCamera() => mainCamera;
+};

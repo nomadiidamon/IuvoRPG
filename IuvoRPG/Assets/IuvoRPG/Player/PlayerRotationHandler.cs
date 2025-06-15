@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
@@ -6,11 +7,11 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] PlayerCameraHandler cameraHandler;
     [SerializeField] PlayerAimHandler aimHandler;
     [SerializeField] PlayerMovementHandler movementHandler;
-
     [SerializeField] Transform aimTargetTransform;
 
-    [SerializeField] float moveRotationSpeed = 5.5f;
-    [SerializeField] float aimRotationSpeed = 3.0f;
+    [SerializeField] private float MoveRotVelocity;
+    [SerializeField] private float AimRotVelocity;
+
 
     [SerializeField] public Context playerContext { get; set; }
 
@@ -26,6 +27,7 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
 
     public void Update()
     {
+        playerContext.Set<Transform>(ContextTransformKey.Transform, playerTransform);
         Rotate();
     }
 
@@ -51,6 +53,30 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
 
     public void RotateForAiming()
     {
+        if (!playerContext.TryGet<bool>(ContextStateKey.IsAiming, out bool isAiming) || !isAiming)
+            return;
+
+        if (!playerContext.TryGet<CharacterStats>(ContextStatKey.PlayerStats, out CharacterStats stats))
+            return;
+
+        Agility playerAgility = stats.GetCharacterAgility(); playerAgility = stats.GetCharacterAgility();
+
+        playerContext.TryGet<bool>(ContextStateKey.IsSprinting, out bool isSprinting);
+
+        playerContext.TryGet<bool>(ContextStateKey.IsMoving, out bool isMoving);
+
+        float targetAngle = GetTargetAngle(aimHandler.AimTarget);
+
+        float angle = 0.0f;
+        if (isMoving)
+        {
+            angle = Mathf.SmoothDampAngle(playerTransform.eulerAngles.y, targetAngle, ref AimRotVelocity, playerAgility.GetAimRotationSpeed() * playerAgility.GetMoveSpeed(isSprinting));
+        }
+        else
+        {
+            angle = Mathf.SmoothDampAngle(playerTransform.eulerAngles.y, targetAngle, ref AimRotVelocity, playerAgility.GetAimRotationSpeed());
+        }
+        playerTransform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
 
     }
 
@@ -59,15 +85,30 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
         if (!playerContext.TryGet<bool>(ContextStateKey.IsMoving, out bool isMoving) || !isMoving)
             return;
 
-        if (!playerContext.TryGet<Vector3>(ContextTransformKey.Direction, out Vector3 lastMoveDirection))
+        if (!playerContext.TryGet<Vector3>(ContextTransformKey.InputDirection, out Vector3 lastMoveDirection))
             return;
 
         if (lastMoveDirection == Vector3.zero)
             return;
 
-        // Rotate the actual player transform toward the direction of movement
-        
+        if (!playerContext.TryGet<CharacterStats>(ContextStatKey.PlayerStats, out CharacterStats stats))
+            return;
+
+        Agility playerAgility = stats.GetCharacterAgility();
+
+        float targetAngle = GetTargetAngle(lastMoveDirection);
+
+        bool isSprinting;
+        playerContext.TryGet<bool>(ContextStateKey.IsSprinting, out isSprinting);
+        float angle = Mathf.SmoothDampAngle(playerTransform.eulerAngles.y, targetAngle, ref MoveRotVelocity, playerAgility.GetMoveRotationSpeed() * playerAgility.GetMoveSpeed(isSprinting));
+        playerTransform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+
     }
 
+
+    public float GetTargetAngle(Vector3 direction)
+    {
+        return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraHandler.GetMainCamera().transform.eulerAngles.y;
+    }
 }
 

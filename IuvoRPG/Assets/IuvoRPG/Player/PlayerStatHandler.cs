@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Transition class from Monobehaviour to POCO
 public class PlayerStatHandler : SemiBehaviorManager, IPlayerHandler
 {
     [SerializeField] public Context playerContext { get; set; }
@@ -9,8 +8,14 @@ public class PlayerStatHandler : SemiBehaviorManager, IPlayerHandler
     [Header("Player Stats")]
     [SerializeField] public CharacterStats playerStats;
 
+    public void Awake()
+    {
+        playerContext.Set<CharacterStats>(ContextStatKey.PlayerStats, playerStats);
+    }
+
     public void Start()
     {
+
         Register(playerStats);
         Register(playerStats.GetCharacterLevel());
         Register(playerStats.GetCharacterHealth());

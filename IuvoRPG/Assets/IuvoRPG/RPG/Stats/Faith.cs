@@ -4,7 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Faith : Stat
 {
-    Luck myLuck;
 
     [Header("Character's Karmic nature")]
     [SerializeField] private float karma = 0.5f;
@@ -22,6 +21,8 @@ public class Faith : Stat
     [Header("Faith Based Bonuses")]
     [SerializeField] private float faithSpellMult = 0.35f;
 
+    Luck myLuck;
+    
     public override void OnStart()
     {
         _levelValue = 1;

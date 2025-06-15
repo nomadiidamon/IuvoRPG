@@ -4,7 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Endurance : Stat
 {
-    [SerializeField] Agility myAgility;
 
     [SerializeField] float currentCarryWeight = 0.0f;
     [SerializeField] float maxCarryWeight = 100.0f;
@@ -16,6 +15,8 @@ public class Endurance : Stat
     [SerializeField] float lungCapacity = 0.35f;
     [SerializeField] float maxLungCapacity = 1.0f;
 
+    [SerializeField] Agility myAgility;
+    
     public override void OnStart()
     {
         _levelValue = 1;

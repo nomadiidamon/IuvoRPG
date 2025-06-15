@@ -59,13 +59,13 @@ public class Player : MonoBehaviour
             inputHandler.OnAimCanceled.AddListener(aimHandler.OnAimCanceled);
             inputHandler.OnSwitchShoulders.AddListener(aimHandler.OnSwitchShoulders);
         }
+        UpdateAllHandlerContexts();
     }
 
     private void Start()
     {
         playerContext.Set<Player>(ContextActorKey.Player, this);
         playerContext.Set<Transform>(ContextTransformKey.Transform, transform);
-        UpdateAllHandlerContexts();
     }
 
     void Update()
@@ -88,9 +88,6 @@ public class Player : MonoBehaviour
 
         // did the player request any UI functions, if so invoke, else check for HUD updates
         UpdateUI();
-
-        //// if any stats have changes to make, make them and report them to the UI
-        //UpdateStats();
         
     }
 
@@ -111,11 +108,6 @@ public class Player : MonoBehaviour
     }
 
 
-
-    //private void UpdateStats()
-    //{
-    //    playerStatHandler.Update();
-    //}
 
     private void UpdateUI()
     {
