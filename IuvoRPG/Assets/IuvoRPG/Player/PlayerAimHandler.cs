@@ -70,11 +70,13 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
         originalTargetOffset = positionComposer.TargetOffset;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        playerContext.Set<PlayerAimHandler>(ContextPlayerHandlerKey.AimHandler, this);
     }
 
     public void Update()
     {
         UpdateAim(isAiming);
+
     }
 
     #region Input Callbacks

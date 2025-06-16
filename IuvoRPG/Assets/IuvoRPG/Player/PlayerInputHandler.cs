@@ -24,6 +24,8 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
 
     public FlexibleEvent OnSwitchShoulders = new FlexibleEvent();
 
+    public FlexibleEvent OnLightAttackPerformed = new FlexibleEvent();
+
     [SerializeField] public Context playerContext { get; set; }
     public ContextPlayerHandlerKey HandlerKey => ContextPlayerHandlerKey.InputHandler;
 
@@ -31,7 +33,7 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
 
     private void Awake()
     {
-        inputActions = GetComponent<InputSystem_Actions>();
+        inputActions = new InputSystem_Actions();
         if (inputActions == null)
             Debug.LogError($"{nameof(PlayerInputHandler)} is missing {nameof(InputSystem_Actions)} component.");
 
@@ -58,6 +60,8 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
         player.Aim.canceled += HandleAimCanceled;
 
         player.SwitchShoulders.performed += HandleSwitchShoulders;
+
+        player.LightAttack.performed += HandleLightAttackPerformed;
     }
 
     private void UnsubscribeInputs()
@@ -74,6 +78,8 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
         player.Aim.canceled -= HandleAimCanceled;
 
         player.SwitchShoulders.performed -= HandleSwitchShoulders;
+
+        player.LightAttack.performed -= HandleLightAttackPerformed;
     }
 
     private void InitializeCombos()
@@ -127,5 +133,11 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
     private void HandleSwitchShoulders(InputAction.CallbackContext ctx)
     {
         OnSwitchShoulders.Invoke();
+    }
+
+    private void HandleLightAttackPerformed(InputAction.CallbackContext ctx)
+    {
+        OnLightAttackPerformed.Invoke();
+        UnityEngine.Debug.Log("Light Attack!");
     }
 }

@@ -1,3 +1,4 @@
+using IuvoUnity._Extensions;
 using System;
 using UnityEngine;
 
@@ -16,7 +17,10 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerCameraHandler cameraHandler;     // camera stays focused on player respective of whatever cameraStyle is needed
     [SerializeField] private PlayerUIHandler playerUIHandler;       // correlates data between the player and their HUD
     [SerializeField] private PlayerStatHandler playerStatHandler;   // holds data necessary for certain player conditions and actions
+    [SerializeField] private PlayerCombatHandler playerCombatHandler; // handles combat related actions, such as attacks, abilities, etc.
 
+    [SerializeField] Transform bulletSpawnPos;
+    [SerializeField] GameObject projectilePrefab;
 
     private void Awake()
     {
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour
         CheckHandler(cameraHandler, nameof(cameraHandler));
         CheckHandler(playerUIHandler, nameof(playerUIHandler));
         CheckHandler(playerStatHandler, nameof(playerStatHandler));
+        CheckHandler(playerCombatHandler, nameof(playerCombatHandler));
 
         SetUpInputs();
     }
@@ -59,6 +64,9 @@ public class Player : MonoBehaviour
             inputHandler.OnAimCanceled.AddListener(aimHandler.OnAimCanceled);
             inputHandler.OnSwitchShoulders.AddListener(aimHandler.OnSwitchShoulders);
         }
+
+        inputHandler.OnLightAttackPerformed.AddListener(SpawnProjectile);
+
         UpdateAllHandlerContexts();
     }
 
@@ -88,6 +96,15 @@ public class Player : MonoBehaviour
 
         // did the player request any UI functions, if so invoke, else check for HUD updates
         UpdateUI();
+
+        if (aimHandler.rightShoulder)
+        {
+            bulletSpawnPos = playerCombatHandler.RightHandPos;
+        }
+        else
+        {
+            bulletSpawnPos = playerCombatHandler.LeftHandPos;
+        }
         
     }
 
@@ -134,6 +151,43 @@ public class Player : MonoBehaviour
         rotationHandler.Update();
     }
 
+
+    public void SpawnProjectile()
+    {
+
+        GameObject instance = Instantiate(projectilePrefab, bulletSpawnPos.position, Quaternion.identity);
+        ProjectileBase projectileBase = instance.GetComponent<ProjectileBase>();
+        if (projectileBase == null)
+        {
+            Debug.LogError("Projectile prefab needs a ProjectileBase component.");
+            return;
+        }
+
+        // Set the projectile's owner and target
+        projectileBase.projectileOwner = transform;
+
+        // Retrieve the aim target
+        if (!playerContext.TryGet<PlayerAimHandler>(ContextPlayerHandlerKey.AimHandler, out PlayerAimHandler aim))
+        {
+            Debug.LogError("AimHandler is not set in PlayerContext.");
+            return;
+        }
+
+        Rigidbody rb = projectileBase.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Projectile prefab needs a Rigidbody component.");
+            return;
+        }
+        projectileBase.spawnPosition = bulletSpawnPos.position;
+        projectileBase.projectileTarget.position = aimHandler.AimTarget;
+        aimHandler.gameObject.SetActive(false);
+
+        projectileBase.Spawn();
+
+        // Get the Rigidbody component from the instance
+        aimHandler.gameObject.SetActive(true);
+    }
 
 
     #region Getters & Setters

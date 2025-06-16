@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 
 public enum ContextActorKey { Player, Target, Ally, Enemy, Camera, Interactable }
-public enum ContextPlayerHandlerKey { AimHandler, AnimatorHandler, CameraHandler, InputHandler, 
+public enum ContextPlayerHandlerKey { AimHandler, AnimatorHandler, CameraHandler, CombatHandler, InputHandler, 
     MovementHandler, RotationHandler, StatHandler, UIHandler, PlayerManager} 
 public enum ContextStateKey { IsUnderAttack, IsVisible, IsMoving, IsGrounded, IsAiming, IsDead, IsPaused, IsSprinting }
 public enum ContextStatKey { PlayerStats, CharcterStats, Score, DistanceToTarget, TimeSinceLastSeen, CooldownTime }
