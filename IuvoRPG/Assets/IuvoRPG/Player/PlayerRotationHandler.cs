@@ -112,5 +112,27 @@ public class PlayerRotationHandler : MonoBehaviour, IPlayerHandler
     {
         return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraHandler.GetMainCamera().transform.eulerAngles.y;
     }
+
+    public void Rotate90()
+    {
+
+    }
+
+    public void RotateNegative90()
+    {
+
+    }
+
+    public void Rotate180()
+    {
+
+    }
+
+    public void Rotate181()
+    {
+
+    }
+
+    
 }
 
