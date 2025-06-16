@@ -8,6 +8,11 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
 {
     private InputSystem_Actions inputActions;
 
+    private InputBuffer inputBuffer = new InputBuffer();
+    private InputComboParser comboParser = new InputComboParser();
+
+
+
     public FlexibleEvent<Vector2> OnMovePerformed = new FlexibleEvent<Vector2>();
     public FlexibleEvent OnMoveCanceled = new FlexibleEvent();
 
@@ -29,6 +34,14 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
         inputActions = GetComponent<InputSystem_Actions>();
         if (inputActions == null)
             Debug.LogError($"{nameof(PlayerInputHandler)} is missing {nameof(InputSystem_Actions)} component.");
+
+        InitializeCombos();
+    }
+
+
+    public void Update()
+    {
+        comboParser.Parse(inputBuffer);
     }
 
     private void SubscribeInputs()
@@ -61,6 +74,11 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
         player.Aim.canceled -= HandleAimCanceled;
 
         player.SwitchShoulders.performed -= HandleSwitchShoulders;
+    }
+
+    private void InitializeCombos()
+    {
+
     }
 
     private void OnEnable()
