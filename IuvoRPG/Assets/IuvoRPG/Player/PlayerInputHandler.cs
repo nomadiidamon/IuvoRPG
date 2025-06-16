@@ -26,39 +26,53 @@ public class PlayerInputHandler : MonoBehaviour, IPlayerHandler
 
     private void Awake()
     {
-        inputActions = new InputSystem_Actions();
+        inputActions = GetComponent<InputSystem_Actions>();
+        if (inputActions == null)
+            Debug.LogError($"{nameof(PlayerInputHandler)} is missing {nameof(InputSystem_Actions)} component.");
     }
 
-    public void OnEnable()
+    private void SubscribeInputs()
+    {
+        var player = inputActions.Player;
+
+        player.Move.performed += HandleMovePerformed;
+        player.Move.canceled += HandleMoveCanceled;
+
+        player.Sprint.performed += HandleSprintStarted;
+        player.Sprint.canceled += HandleSprintCanceled;
+
+        player.Aim.performed += HandleAimStarted;
+        player.Aim.canceled += HandleAimCanceled;
+
+        player.SwitchShoulders.performed += HandleSwitchShoulders;
+    }
+
+    private void UnsubscribeInputs()
+    {
+        var player = inputActions.Player;
+
+        player.Move.performed -= HandleMovePerformed;
+        player.Move.canceled -= HandleMoveCanceled;
+
+        player.Sprint.performed -= HandleSprintStarted;
+        player.Sprint.canceled -= HandleSprintCanceled;
+
+        player.Aim.performed -= HandleAimStarted;
+        player.Aim.canceled -= HandleAimCanceled;
+
+        player.SwitchShoulders.performed -= HandleSwitchShoulders;
+    }
+
+    private void OnEnable()
     {
         inputActions.Player.Enable();
-
-        inputActions.Player.Move.performed += HandleMovePerformed;
-        inputActions.Player.Move.canceled += HandleMoveCanceled;
-
-        inputActions.Player.Sprint.performed += HandleSprintStarted;
-        inputActions.Player.Sprint.canceled += HandleSprintCanceled;
-
-        inputActions.Player.Aim.performed += HandleAimStarted;
-        inputActions.Player.Aim.canceled += HandleAimCanceled;
-
-        inputActions.Player.SwitchShoulders.performed += HandleSwitchShoulders;
+        SubscribeInputs();
     }
 
-    public void OnDisable()
+    private void OnDisable()
     {
+        UnsubscribeInputs();
         inputActions.Player.Disable();
-
-        inputActions.Player.Move.performed -= HandleMovePerformed;
-        inputActions.Player.Move.canceled -= HandleMoveCanceled;
-
-        inputActions.Player.Sprint.performed -= HandleSprintStarted;
-        inputActions.Player.Sprint.canceled -= HandleSprintCanceled;
-
-        inputActions.Player.Aim.performed -= HandleAimStarted;
-        inputActions.Player.Aim.canceled -= HandleAimCanceled;
-
-        inputActions.Player.SwitchShoulders.performed -= HandleSwitchShoulders;
     }
 
     // Input callback methods

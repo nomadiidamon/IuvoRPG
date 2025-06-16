@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Cinemachine;
 using System.Collections;
+using Unity.VisualScripting;
 
 // TODO: Transition class from Monobehaviour to POCO
 public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
@@ -9,8 +10,7 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
     [SerializeField] private PlayerAnimatorHandler playerAnimatorHandler;
     [SerializeField] private PlayerUIHandler playerUIHandler;
     [SerializeField] public Transform playerTransform;
-    [SerializeField] private Transform aimReferenceSphere;
-    [SerializeField] private IStayHere aimPoint;
+    [SerializeField] private Transform debugTransform;
 
 
     [SerializeField] private PlayerCameraHandler cameraHandler;
@@ -25,8 +25,10 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
     [Header("Settings")]
     [SerializeField] private float maxAimDistance = 100f;
     [SerializeField] private float aimSpeed = 2.5f;
+    [SerializeField] private float lookAtAimTargetSpeed = 5.0f;
     [SerializeField] private float shoulderSwitchSpeed = 0.75f;
     [SerializeField] private bool isSwitchingShoulders = false;
+    [SerializeField] private LayerMask aimColliderLayer = new LayerMask();
 
     [Header("Runtime Values")]
     [SerializeField] public bool isAiming = false;
@@ -56,16 +58,16 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
                 positionComposer = cameraHandler.tpsCam.GetComponent<CinemachinePositionComposer>();
             }
 
+            if (debugTransform == null)
+            {
+                Debug.LogWarning("Debug Tansform is NULL");
+            }
         }
     }
 
     public void Start()
     {
         originalTargetOffset = positionComposer.TargetOffset;
-        if (aimReferenceSphere != null)
-        {
-            aimPoint = aimReferenceSphere.GetComponent<IStayHere>();
-        }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -81,7 +83,8 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
         playerUIHandler.AimReticle.transform.localScale *= 2;
         cameraHandler.SwitchCameraStyles(CameraStyle.THIRD_PERSON_SHOOTER);
         isAiming = true;
-        //playerAnimatorHandler.animator.SetBool("IsAiming", true);
+        if (rightShoulder) playerAnimatorHandler.animator.SetBool("IsAimRightShoulder", true);
+        else playerAnimatorHandler.animator.SetBool("IsAimRightShoulder", false);
         int layerIndex = playerAnimatorHandler.animator.GetLayerIndex("Aim");
         StartCoroutine(StartAiming(layerIndex, aimSpeed));
         playerContext.Set<bool>(ContextStateKey.IsAiming, isAiming);
@@ -91,7 +94,6 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
         playerUIHandler.AimReticle.transform.localScale /= 2;
         cameraHandler.SwitchCameraStyles(CameraStyle.EXPLORATION);
         isAiming = false;
-        //playerAnimatorHandler.animator.SetBool("IsAiming", false);
         int layerIndex = playerAnimatorHandler.animator.GetLayerIndex("Aim");
         StartCoroutine(StopAiming(layerIndex, aimSpeed));
         playerContext.Set<bool>(ContextStateKey.IsAiming, isAiming);
@@ -117,6 +119,8 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
     {
         float time = 0f;
         float startX = positionComposer.TargetOffset.x;
+        bool paramSet = false;
+        float triggerTime = duration * (2f / 3f);
 
         isSwitchingShoulders = true;
 
@@ -126,6 +130,14 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
             var offset = positionComposer.TargetOffset;
             offset.x = newX;
             positionComposer.TargetOffset = offset;
+
+            // Set animator param after trigger time has been reached
+            if (!paramSet && time >= triggerTime)
+            {
+                playerAnimatorHandler.animator.SetBool("IsAimRightShoulder", rightShoulder);
+                paramSet = true;
+            }
+
             time += Time.deltaTime;
             yield return null;
         }
@@ -180,20 +192,34 @@ public class PlayerAimHandler : MonoBehaviour, IPlayerHandler
 
     public void UpdateAim(bool isAiming)
     {
+        Vector3 mouseWorldPosition = Vector3.zero;
+
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        ray = cameraHandler.GetMainCamera().ScreenPointToRay(screenCenterPoint);
+
+        if (Physics.Raycast(ray, out hit, maxAimDistance, aimColliderLayer))
+        {
+            debugTransform.position = hit.point;
+            mouseWorldPosition = hit.point;
+            AimTarget = hit.point;
+
+            AimDistance = hit.distance;
+        }
+
         if (isAiming)
         {
-            ray = SceneManager.Instance.cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
+            if (!playerContext.TryGet<CharacterStats>(ContextStatKey.PlayerStats, out CharacterStats stats))
+                return;
+            Agility playerAgility = stats.GetCharacterAgility();
 
-            if (Physics.Raycast(ray, out hit, maxAimDistance))
-            {
-                AimDistance = hit.distance;
-                AimTarget = hit.point;
 
-                if (!aimPoint.IsApproximatelySame(hit.point))
-                {
-                    aimPoint.SetPosition(hit.point);
-                }
-            }
+
+            Vector3 worldAimTarget = mouseWorldPosition;
+            worldAimTarget.y = playerTransform.position.y;
+            Vector3 aimDirection = (worldAimTarget - playerTransform.position).normalized;
+
+            playerTransform.forward = Vector3.Lerp(playerTransform.forward, aimDirection, lookAtAimTargetSpeed * Time.deltaTime);
+
         }
     }
 
