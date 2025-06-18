@@ -9,17 +9,22 @@ public class SceneManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-       
+
         cam = GetComponentInChildren<Camera>();
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 }
